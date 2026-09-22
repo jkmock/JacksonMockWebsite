@@ -101,17 +101,20 @@ export function initGlobe(canvas, places = []) {
   scene.add(ocean);
 
   let markers = null;
+  let markerMaterial = null;
+  let connections = null;
+  let connectionMaterial = null;
   if (places.length) {
+    const markerVectors = places.map((place) => latLngToVector3(place.lat, place.lng, GLOBE_RADIUS * 1.01));
     const markerPositions = new Float32Array(places.length * 3);
-    places.forEach((place, i) => {
-      const v = latLngToVector3(place.lat, place.lng, GLOBE_RADIUS * 1.01);
+    markerVectors.forEach((v, i) => {
       markerPositions[i * 3] = v.x;
       markerPositions[i * 3 + 1] = v.y;
       markerPositions[i * 3 + 2] = v.z;
     });
     const markerGeometry = new THREE.BufferGeometry();
     markerGeometry.setAttribute('position', new THREE.BufferAttribute(markerPositions, 3));
-    const markerMaterial = new THREE.PointsMaterial({
+    markerMaterial = new THREE.PointsMaterial({
       size: 0.09,
       map: dotTexture,
       color: 0xffffff,
@@ -123,6 +126,27 @@ export function initGlobe(canvas, places = []) {
     });
     markers = new THREE.Points(markerGeometry, markerMaterial);
     scene.add(markers);
+
+    if (markerVectors.length > 1) {
+      const linePositions = [];
+      for (let i = 0; i < markerVectors.length - 1; i++) {
+        linePositions.push(
+          markerVectors[i].x, markerVectors[i].y, markerVectors[i].z,
+          markerVectors[i + 1].x, markerVectors[i + 1].y, markerVectors[i + 1].z
+        );
+      }
+      const connectionGeometry = new THREE.BufferGeometry();
+      connectionGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
+      connectionMaterial = new THREE.LineBasicMaterial({
+        color: 0x6ee7ff,
+        transparent: true,
+        opacity: 0.5,
+        blending: THREE.AdditiveBlending,
+      });
+      connections = new THREE.LineSegments(connectionGeometry, connectionMaterial);
+      connections.visible = false;
+      scene.add(connections);
+    }
   }
 
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -152,5 +176,26 @@ export function initGlobe(canvas, places = []) {
   }
   animate();
 
-  return { scene, camera, renderer, land, ocean, markers, controls };
+  return {
+    scene,
+    camera,
+    renderer,
+    land,
+    ocean,
+    markers,
+    connections,
+    controls,
+    materials: { landMaterial, oceanMaterial, markerMaterial, connectionMaterial },
+  };
+}
+
+export function setGlobeTheme({ materials, connections }, globeTheme) {
+  materials.landMaterial.color.set(globeTheme.land);
+  materials.oceanMaterial.color.set(globeTheme.ocean);
+  if (materials.markerMaterial) materials.markerMaterial.color.set(globeTheme.marker);
+  if (materials.connectionMaterial) materials.connectionMaterial.color.set(globeTheme.connection);
+}
+
+export function setConnectionsVisible({ connections }, visible) {
+  if (connections) connections.visible = visible;
 }
