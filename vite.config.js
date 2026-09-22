@@ -7,6 +7,7 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         resume: resolve(import.meta.dirname, 'resume.html'),
+        globe: resolve(import.meta.dirname, 'globe.html'),
       },
     },
   },

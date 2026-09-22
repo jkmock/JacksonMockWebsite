@@ -53,12 +53,20 @@ body {
   overflow: hidden;
 }
 
-#scene {
+.bg-canvas {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.globe-hero {
+  cursor: grab;
+}
+
+.globe-hero:active {
+  cursor: grabbing;
 }
 
 .hero-copy {
