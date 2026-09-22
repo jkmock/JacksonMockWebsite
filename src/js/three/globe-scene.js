@@ -62,7 +62,7 @@ export function initGlobe(canvas, places = []) {
 
   const dotTexture = createDotTexture();
 
-  const candidates = fibonacciSpherePoints(24000);
+  const candidates = fibonacciSpherePoints(60000);
   const landPositions = [];
   const oceanPositions = [];
   for (const p of candidates) {
@@ -73,7 +73,7 @@ export function initGlobe(canvas, places = []) {
   const landGeometry = new THREE.BufferGeometry();
   landGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(landPositions), 3));
   const landMaterial = new THREE.PointsMaterial({
-    size: 0.04,
+    size: 0.026,
     map: dotTexture,
     color: 0x6ee7ff,
     transparent: true,
@@ -88,7 +88,7 @@ export function initGlobe(canvas, places = []) {
   const oceanGeometry = new THREE.BufferGeometry();
   oceanGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(oceanPositions), 3));
   const oceanMaterial = new THREE.PointsMaterial({
-    size: 0.02,
+    size: 0.013,
     map: dotTexture,
     color: 0x6ee7ff,
     transparent: true,

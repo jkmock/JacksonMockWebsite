@@ -1,8 +1,8 @@
 import { feature } from 'topojson-client';
-import landTopology from 'world-atlas/land-110m.json';
+import landTopology from 'world-atlas/land-50m.json';
 
-const MASK_WIDTH = 720;
-const MASK_HEIGHT = 360;
+const MASK_WIDTH = 1440;
+const MASK_HEIGHT = 720;
 
 function lonLatToPx(lon, lat) {
   return [((lon + 180) / 360) * MASK_WIDTH, ((90 - lat) / 180) * MASK_HEIGHT];
@@ -29,10 +29,15 @@ function rasterizeLandMask() {
     const polygonRings = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates;
     for (const rings of polygonRings) {
       for (const ring of rings) {
+        let prevLon = null;
         ring.forEach(([lon, lat], i) => {
           const [x, y] = lonLatToPx(lon, lat);
-          if (i === 0) ctx.moveTo(x, y);
+          // A ring that crosses the antimeridian (e.g. Antarctica, Russia)
+          // would otherwise draw a false straight line across the whole map
+          // connecting +180 to -180 — break into a new subpath instead.
+          if (i === 0 || Math.abs(lon - prevLon) > 180) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
+          prevLon = lon;
         });
         ctx.closePath();
       }
