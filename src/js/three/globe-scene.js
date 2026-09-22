@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { isLand } from './land-mask.js';
 
 const GLOBE_RADIUS = 2;
 
@@ -18,18 +19,26 @@ function createDotTexture() {
   return new THREE.CanvasTexture(canvas);
 }
 
-function fibonacciSpherePositions(count, radius) {
-  const positions = new Float32Array(count * 3);
+// Generates points evenly spread over a unit sphere, each tagged with the
+// lat/lon that latLngToVector3 below would place at that same xyz — so the
+// land mask (which is indexed by lat/lon) lines up with these coordinates.
+function fibonacciSpherePoints(count) {
+  const points = [];
   const goldenAngle = Math.PI * (3 - Math.sqrt(5));
   for (let i = 0; i < count; i++) {
     const y = 1 - (i / (count - 1)) * 2;
     const radiusAtY = Math.sqrt(1 - y * y);
     const theta = goldenAngle * i;
-    positions[i * 3] = Math.cos(theta) * radiusAtY * radius;
-    positions[i * 3 + 1] = y * radius;
-    positions[i * 3 + 2] = Math.sin(theta) * radiusAtY * radius;
+    const x = Math.cos(theta) * radiusAtY;
+    const z = Math.sin(theta) * radiusAtY;
+
+    const phi = Math.acos(Math.max(-1, Math.min(1, y)));
+    const lat = 90 - (phi * 180) / Math.PI;
+    const lon = ((((Math.atan2(z, -x) * 180) / Math.PI - 180 + 540) % 360) + 360) % 360 - 180;
+
+    points.push({ x, y, z, lat, lon });
   }
-  return positions;
+  return points;
 }
 
 function latLngToVector3(lat, lng, radius) {
@@ -53,23 +62,43 @@ export function initGlobe(canvas, places = []) {
 
   const dotTexture = createDotTexture();
 
-  const surfaceGeometry = new THREE.BufferGeometry();
-  surfaceGeometry.setAttribute(
-    'position',
-    new THREE.BufferAttribute(fibonacciSpherePositions(6000, GLOBE_RADIUS), 3)
-  );
-  const surfaceMaterial = new THREE.PointsMaterial({
-    size: 0.035,
+  const candidates = fibonacciSpherePoints(24000);
+  const landPositions = [];
+  const oceanPositions = [];
+  for (const p of candidates) {
+    const target = isLand(p.lat, p.lon) ? landPositions : oceanPositions;
+    target.push(p.x * GLOBE_RADIUS, p.y * GLOBE_RADIUS, p.z * GLOBE_RADIUS);
+  }
+
+  const landGeometry = new THREE.BufferGeometry();
+  landGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(landPositions), 3));
+  const landMaterial = new THREE.PointsMaterial({
+    size: 0.04,
     map: dotTexture,
     color: 0x6ee7ff,
     transparent: true,
-    opacity: 0.55,
+    opacity: 0.9,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
     sizeAttenuation: true,
   });
-  const globe = new THREE.Points(surfaceGeometry, surfaceMaterial);
-  scene.add(globe);
+  const land = new THREE.Points(landGeometry, landMaterial);
+  scene.add(land);
+
+  const oceanGeometry = new THREE.BufferGeometry();
+  oceanGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(oceanPositions), 3));
+  const oceanMaterial = new THREE.PointsMaterial({
+    size: 0.02,
+    map: dotTexture,
+    color: 0x6ee7ff,
+    transparent: true,
+    opacity: 0.18,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    sizeAttenuation: true,
+  });
+  const ocean = new THREE.Points(oceanGeometry, oceanMaterial);
+  scene.add(ocean);
 
   let markers = null;
   if (places.length) {
@@ -123,5 +152,5 @@ export function initGlobe(canvas, places = []) {
   }
   animate();
 
-  return { scene, camera, renderer, globe, markers, controls };
+  return { scene, camera, renderer, land, ocean, markers, controls };
 }
