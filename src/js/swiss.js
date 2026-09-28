@@ -176,7 +176,7 @@ function initMagnetic() {
 
 function initWorkThumb() {
   const rows = document.querySelectorAll('.s-work-row');
-  if (!rows.length) return;
+  if (!rows.length || !window.matchMedia('(pointer: fine)').matches) return;
 
   const thumb = document.createElement('div');
   thumb.className = 's-work-thumb';
@@ -185,20 +185,32 @@ function initWorkThumb() {
   const xTo = gsap.quickTo(thumb, 'x', { duration: 0.5, ease: 'power3' });
   const yTo = gsap.quickTo(thumb, 'y', { duration: 0.5, ease: 'power3' });
 
-  rows.forEach((row) => {
-    row.addEventListener('mouseenter', (e) => {
+  // Recomputed from the real cursor position on every move (rather than
+  // paired mouseenter/mouseleave per row) so the thumbnail can never get
+  // stuck visible if a leave event is missed — e.g. very fast mouse
+  // movement, or touch/trackpad hover emulation that skips it.
+  let activeRow = null;
+
+  window.addEventListener('mousemove', (e) => {
+    xTo(e.clientX - 110);
+    yTo(e.clientY - 75);
+
+    const row = e.target.closest('.s-work-row');
+    if (row && row !== activeRow) {
+      activeRow = row;
       thumb.style.background = `linear-gradient(135deg, ${row.dataset.color}, #111111)`;
-      xTo(e.clientX - 110);
-      yTo(e.clientY - 75);
       gsap.to(thumb, { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out' });
-    });
-    row.addEventListener('mousemove', (e) => {
-      xTo(e.clientX - 110);
-      yTo(e.clientY - 75);
-    });
-    row.addEventListener('mouseleave', () => {
+    } else if (!row && activeRow) {
+      activeRow = null;
       gsap.to(thumb, { opacity: 0, scale: 0.85, duration: 0.3, ease: 'power2.out' });
-    });
+    }
+  });
+
+  window.addEventListener('mouseleave', () => {
+    if (activeRow) {
+      activeRow = null;
+      gsap.to(thumb, { opacity: 0, scale: 0.85, duration: 0.3, ease: 'power2.out' });
+    }
   });
 }
 
