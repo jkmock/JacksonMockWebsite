@@ -127,38 +127,10 @@ ul {
   pointer-events: none;
 }
 
-.s-shape--circle {
-  top: 12%;
-  right: 8%;
-  width: 34vw;
-  height: 34vw;
-  max-width: 420px;
-  max-height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--c-red), #7a0d10 75%);
-  opacity: 0.9;
-}
-
-.s-shape--ring {
-  bottom: 8%;
-  left: 4%;
-  width: 22vw;
-  height: 22vw;
-  max-width: 260px;
-  max-height: 260px;
-  border-radius: 50%;
-  border: 3px solid var(--c-blue);
-  opacity: 0.6;
-}
-
-.s-shape--bar {
-  top: 42%;
-  right: 22%;
-  width: 40vw;
-  max-width: 480px;
-  height: 10px;
-  background: var(--c-amber);
-  transform: rotate(-8deg);
+.s-mark {
+  font-family: 'Space Mono', monospace;
+  color: rgba(17, 17, 17, 0.28);
+  line-height: 1;
 }
 
 .s-shape--outline-circle {
@@ -236,7 +208,7 @@ ul {
   justify-content: center;
   padding: 6rem var(--gutter) 4rem;
   position: relative;
-  background: #ffffff;
+  background: var(--c-cream);
   color: var(--s-fg);
   overflow: hidden;
 }
