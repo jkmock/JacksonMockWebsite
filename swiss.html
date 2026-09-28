@@ -19,6 +19,7 @@
     </div>
 
     <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="grid-overlay" aria-hidden="true"></div>
 
     <header class="s-header">
       <a class="s-logo" href="/swiss.html">JM</a>
@@ -34,6 +35,9 @@
 
     <main>
       <section class="s-hero" id="hero">
+        <div class="s-shape s-shape--circle" data-speed="0.15"></div>
+        <div class="s-shape s-shape--ring" data-speed="0.3"></div>
+        <div class="s-shape s-shape--bar" data-speed="0.08"></div>
         <div class="s-hero-grid">
           <p class="s-eyebrow reveal-line">Portfolio — 2026</p>
           <h1 class="s-hero-title">
@@ -54,172 +58,192 @@
       <div class="s-marquee">
         <div class="s-marquee-track">
           <span>Software Engineering</span>
-          <span>—</span>
+          <span>★</span>
           <span>Systems Design</span>
-          <span>—</span>
+          <span>★</span>
           <span>Creative Coding</span>
-          <span>—</span>
+          <span>★</span>
           <span>3D on the Web</span>
-          <span>—</span>
+          <span>★</span>
           <span>Open to Work</span>
-          <span>—</span>
+          <span>★</span>
           <span>Software Engineering</span>
-          <span>—</span>
+          <span>★</span>
           <span>Systems Design</span>
-          <span>—</span>
+          <span>★</span>
           <span>Creative Coding</span>
-          <span>—</span>
+          <span>★</span>
           <span>3D on the Web</span>
-          <span>—</span>
+          <span>★</span>
           <span>Open to Work</span>
-          <span>—</span>
+          <span>★</span>
         </div>
       </div>
 
-      <section class="s-section" id="about">
-        <div class="s-section-head">
-          <span class="s-index">01</span>
-          <h2 class="reveal-up">About</h2>
-        </div>
-        <div class="s-about-grid">
-          <p class="s-about-copy reveal-up">
-            I'm a software engineer who likes working across the whole stack — from backend
-            systems and APIs to real-time 3D graphics in the browser. I care about clean
-            architecture as much as I care about how something feels to use. This site is a
-            running log of that: part portfolio, part playground.
-          </p>
-          <div class="s-stats">
-            <div class="s-stat reveal-up">
-              <span class="s-stat-number" data-count="6">0</span>
-              <span class="s-stat-label">Years Coding</span>
-            </div>
-            <div class="s-stat reveal-up">
-              <span class="s-stat-number" data-count="24">0</span>
-              <span class="s-stat-label">Projects Shipped</span>
-            </div>
-            <div class="s-stat reveal-up">
-              <span class="s-stat-number" data-count="9">0</span>
-              <span class="s-stat-label">Technologies</span>
-            </div>
-            <div class="s-stat reveal-up">
-              <span class="s-stat-number" data-count="100" data-suffix="%">0</span>
-              <span class="s-stat-label">Curiosity-Driven</span>
+      <section class="s-section s-section--cream" id="about">
+        <div class="s-wipe" data-origin="bottom"></div>
+        <div class="s-shape s-shape--outline-circle"></div>
+        <div class="s-section-inner">
+          <div class="s-section-head">
+            <span class="s-index">01</span>
+            <h2 class="reveal-up">About</h2>
+          </div>
+          <div class="s-about-grid">
+            <p class="s-about-copy reveal-up">
+              I'm a software engineer who likes working across the whole stack — from backend
+              systems and APIs to real-time 3D graphics in the browser. I care about clean
+              architecture as much as I care about how something feels to use. This site is a
+              running log of that: part portfolio, part playground.
+            </p>
+            <div class="s-stats">
+              <div class="s-stat reveal-up">
+                <span class="s-stat-number" data-count="6">0</span>
+                <span class="s-stat-label">Years Coding</span>
+              </div>
+              <div class="s-stat reveal-up">
+                <span class="s-stat-number" data-count="24">0</span>
+                <span class="s-stat-label">Projects Shipped</span>
+              </div>
+              <div class="s-stat reveal-up">
+                <span class="s-stat-number" data-count="9">0</span>
+                <span class="s-stat-label">Technologies</span>
+              </div>
+              <div class="s-stat reveal-up">
+                <span class="s-stat-number" data-count="100" data-suffix="%">0</span>
+                <span class="s-stat-label">Curiosity-Driven</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="s-section" id="stack">
-        <div class="s-section-head">
-          <span class="s-index">02</span>
-          <h2 class="reveal-up">Stack</h2>
-        </div>
-        <div class="s-stack-grid">
-          <div class="s-stack-col reveal-up">
-            <h3>Languages</h3>
-            <ul>
-              <li>TypeScript</li>
-              <li>Python</li>
-              <li>Go</li>
-              <li>C++</li>
-            </ul>
+      <section class="s-section s-section--navy" id="stack">
+        <div class="s-wipe" data-origin="top"></div>
+        <div class="s-shape s-shape--dots"></div>
+        <div class="s-section-inner">
+          <div class="s-section-head">
+            <span class="s-index">02</span>
+            <h2 class="reveal-up">Stack</h2>
           </div>
-          <div class="s-stack-col reveal-up">
-            <h3>Frontend</h3>
-            <ul>
-              <li>React</li>
-              <li>Three.js</li>
-              <li>WebGL</li>
-              <li>GSAP</li>
-            </ul>
-          </div>
-          <div class="s-stack-col reveal-up">
-            <h3>Backend</h3>
-            <ul>
-              <li>Node.js</li>
-              <li>PostgreSQL</li>
-              <li>Docker</li>
-              <li>AWS</li>
-            </ul>
-          </div>
-          <div class="s-stack-col reveal-up">
-            <h3>Tools</h3>
-            <ul>
-              <li>Git</li>
-              <li>Figma</li>
-              <li>Blender</li>
-              <li>Linux</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="s-section" id="work">
-        <div class="s-section-head">
-          <span class="s-index">03</span>
-          <h2 class="reveal-up">Selected Work</h2>
-        </div>
-        <div class="s-work-list">
-          <a class="s-work-row" href="#" data-hover data-color="#e3252a">
-            <span class="s-work-index">01</span>
-            <span class="s-work-title">Realtime Ray Tracer</span>
-            <span class="s-work-tags">WebGL · GLSL · TypeScript</span>
-            <span class="s-work-arrow">↗</span>
-          </a>
-          <a class="s-work-row" href="#" data-hover data-color="#1d4ed8">
-            <span class="s-work-index">02</span>
-            <span class="s-work-title">Distributed Task Queue</span>
-            <span class="s-work-tags">Go · Redis · gRPC</span>
-            <span class="s-work-arrow">↗</span>
-          </a>
-          <a class="s-work-row" href="#" data-hover data-color="#15803d">
-            <span class="s-work-index">03</span>
-            <span class="s-work-title">Generative Terrain Engine</span>
-            <span class="s-work-tags">Three.js · Simplex Noise · React</span>
-            <span class="s-work-arrow">↗</span>
-          </a>
-          <a class="s-work-row" href="#" data-hover data-color="#a16207">
-            <span class="s-work-index">04</span>
-            <span class="s-work-title">Personal Finance API</span>
-            <span class="s-work-tags">TypeScript · PostgreSQL · Docker</span>
-            <span class="s-work-arrow">↗</span>
-          </a>
-        </div>
-      </section>
-
-      <section class="s-section" id="experience">
-        <div class="s-section-head">
-          <span class="s-index">04</span>
-          <h2 class="reveal-up">Experience</h2>
-        </div>
-        <div class="s-timeline">
-          <div class="s-timeline-row reveal-up">
-            <span class="s-timeline-date">2024 — Present</span>
-            <span class="s-timeline-role">Software Engineer, Company Name</span>
-            <span class="s-timeline-desc">Building and scaling core product systems.</span>
-          </div>
-          <div class="s-timeline-row reveal-up">
-            <span class="s-timeline-date">2022 — 2024</span>
-            <span class="s-timeline-role">Software Engineer Intern, Company Name</span>
-            <span class="s-timeline-desc">Shipped features across the full stack.</span>
-          </div>
-          <div class="s-timeline-row reveal-up">
-            <span class="s-timeline-date">2020 — 2024</span>
-            <span class="s-timeline-role">B.S. Computer Science, University Name</span>
-            <span class="s-timeline-desc">Focus on systems and graphics.</span>
+          <div class="s-stack-grid">
+            <div class="s-stack-col reveal-up">
+              <h3>Languages</h3>
+              <ul>
+                <li>TypeScript</li>
+                <li>Python</li>
+                <li>Go</li>
+                <li>C++</li>
+              </ul>
+            </div>
+            <div class="s-stack-col reveal-up">
+              <h3>Frontend</h3>
+              <ul>
+                <li>React</li>
+                <li>Three.js</li>
+                <li>WebGL</li>
+                <li>GSAP</li>
+              </ul>
+            </div>
+            <div class="s-stack-col reveal-up">
+              <h3>Backend</h3>
+              <ul>
+                <li>Node.js</li>
+                <li>PostgreSQL</li>
+                <li>Docker</li>
+                <li>AWS</li>
+              </ul>
+            </div>
+            <div class="s-stack-col reveal-up">
+              <h3>Tools</h3>
+              <ul>
+                <li>Git</li>
+                <li>Figma</li>
+                <li>Blender</li>
+                <li>Linux</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="s-contact" id="contact">
-        <span class="s-index">05</span>
-        <h2 class="s-contact-title reveal-up">
-          <a href="mailto:hello@jacksonmock.com" data-hover data-magnetic>Let's talk</a>
-        </h2>
-        <div class="s-contact-links reveal-up">
-          <a href="#" data-hover>GitHub</a>
-          <a href="#" data-hover>LinkedIn</a>
-          <a href="#" data-hover>X / Twitter</a>
+      <section class="s-section s-section--ink" id="work">
+        <div class="s-wipe" data-origin="bottom"></div>
+        <div class="s-shape s-shape--stripes"></div>
+        <div class="s-section-inner">
+          <div class="s-section-head">
+            <span class="s-index">03</span>
+            <h2 class="reveal-up">Selected Work</h2>
+          </div>
+          <div class="s-work-list">
+            <a class="s-work-row" href="#" data-hover data-color="#e3252a">
+              <span class="s-work-index">01</span>
+              <span class="s-work-title">Realtime Ray Tracer</span>
+              <span class="s-work-tags">WebGL · GLSL · TypeScript</span>
+              <span class="s-work-arrow">↗</span>
+            </a>
+            <a class="s-work-row" href="#" data-hover data-color="#2952e3">
+              <span class="s-work-index">02</span>
+              <span class="s-work-title">Distributed Task Queue</span>
+              <span class="s-work-tags">Go · Redis · gRPC</span>
+              <span class="s-work-arrow">↗</span>
+            </a>
+            <a class="s-work-row" href="#" data-hover data-color="#0d9488">
+              <span class="s-work-index">03</span>
+              <span class="s-work-title">Generative Terrain Engine</span>
+              <span class="s-work-tags">Three.js · Simplex Noise · React</span>
+              <span class="s-work-arrow">↗</span>
+            </a>
+            <a class="s-work-row" href="#" data-hover data-color="#f2b705">
+              <span class="s-work-index">04</span>
+              <span class="s-work-title">Personal Finance API</span>
+              <span class="s-work-tags">TypeScript · PostgreSQL · Docker</span>
+              <span class="s-work-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="s-section s-section--amber" id="experience">
+        <div class="s-wipe" data-origin="top"></div>
+        <div class="s-shape s-shape--triangle"></div>
+        <div class="s-section-inner">
+          <div class="s-section-head">
+            <span class="s-index">04</span>
+            <h2 class="reveal-up">Experience</h2>
+          </div>
+          <div class="s-timeline">
+            <div class="s-timeline-row reveal-up">
+              <span class="s-timeline-date">2024 — Present</span>
+              <span class="s-timeline-role">Software Engineer, Company Name</span>
+              <span class="s-timeline-desc">Building and scaling core product systems.</span>
+            </div>
+            <div class="s-timeline-row reveal-up">
+              <span class="s-timeline-date">2022 — 2024</span>
+              <span class="s-timeline-role">Software Engineer Intern, Company Name</span>
+              <span class="s-timeline-desc">Shipped features across the full stack.</span>
+            </div>
+            <div class="s-timeline-row reveal-up">
+              <span class="s-timeline-date">2020 — 2024</span>
+              <span class="s-timeline-role">B.S. Computer Science, University Name</span>
+              <span class="s-timeline-desc">Focus on systems and graphics.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="s-contact s-section--red" id="contact">
+        <div class="s-wipe" data-origin="bottom"></div>
+        <div class="s-shape s-shape--big-circle"></div>
+        <div class="s-section-inner s-contact-inner">
+          <span class="s-index">05</span>
+          <h2 class="s-contact-title reveal-up">
+            <a href="mailto:hello@jacksonmock.com" data-hover data-magnetic>Let's talk</a>
+          </h2>
+          <div class="s-contact-links reveal-up">
+            <a href="#" data-hover>GitHub</a>
+            <a href="#" data-hover>LinkedIn</a>
+            <a href="#" data-hover>X / Twitter</a>
+          </div>
         </div>
       </section>
     </main>

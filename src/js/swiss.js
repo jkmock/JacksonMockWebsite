@@ -62,17 +62,44 @@ function initHeroReveal() {
 }
 
 function initScrollReveals() {
-  ScrollTrigger.batch('.reveal-up', {
-    start: 'top 85%',
-    once: true,
-    onEnter: (batch) =>
-      gsap.to(batch, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: 'power3.out',
-      }),
+  document.querySelectorAll('.s-section, .s-contact').forEach((section) => {
+    const wipe = section.querySelector('.s-wipe');
+    const items = section.querySelectorAll('.reveal-up');
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top 75%',
+      once: true,
+      onEnter: () => {
+        const tl = gsap.timeline();
+        if (wipe) {
+          tl.to(wipe, { scaleY: 0, duration: 0.9, ease: 'power4.inOut' });
+        }
+        if (items.length) {
+          tl.to(
+            items,
+            { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out' },
+            wipe ? '-=0.35' : 0
+          );
+        }
+      },
+    });
+  });
+}
+
+function initHeroParallax() {
+  document.querySelectorAll('.s-shape[data-speed]').forEach((shape) => {
+    const speed = parseFloat(shape.dataset.speed);
+    gsap.to(shape, {
+      yPercent: speed * 100,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.s-hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
   });
 }
 
@@ -203,6 +230,8 @@ initClock();
 initSmoothAnchors();
 initWorkThumb();
 initMagnetic();
+
+initHeroParallax();
 
 initPreloader(lenis, () => {
   initHeroReveal();
