@@ -8,6 +8,7 @@ export default defineConfig({
         main: resolve(import.meta.dirname, 'index.html'),
         resume: resolve(import.meta.dirname, 'resume.html'),
         globe: resolve(import.meta.dirname, 'globe.html'),
+        swiss: resolve(import.meta.dirname, 'swiss.html'),
       },
     },
   },
