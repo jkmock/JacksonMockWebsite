@@ -835,6 +835,52 @@ body::before {
   }
 }
 
+/* E — accent color touches */
+.home-quiet ::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.home-quiet .h-top nav a {
+  padding-bottom: 0.3rem;
+  text-decoration: none;
+  background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat;
+  transition: background-size 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.home-quiet .h-top nav a:hover,
+.home-quiet .h-top nav a:focus-visible {
+  background-size: 100% 2px;
+  outline: none;
+}
+
+.home-quiet .h-top b {
+  color: var(--accent);
+}
+
+.home-quiet .h-eyebrow {
+  color: var(--accent);
+}
+
+.home-quiet .box-btn span {
+  color: var(--accent);
+}
+
+.home-quiet .box-btn.filled span {
+  color: var(--bg);
+}
+
+.home-quiet .box-btn:hover,
+.home-quiet .box-btn.filled:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.home-quiet .box-btn:hover span {
+  color: var(--bg);
+}
+
 /* E — quiet field spans the page, fading in from the right */
 .home-quiet .c-vert-right {
   font-size: 1.2vw;
