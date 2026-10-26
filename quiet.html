@@ -48,7 +48,7 @@
           <a class="box-btn icon-btn" href="https://github.com/jkmock" aria-label="GitHub">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
           </a>
-          <a class="box-btn icon-btn" href="#" aria-label="LinkedIn">
+          <a class="box-btn icon-btn" href="https://www.linkedin.com/in/jackson-mock" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
           </a>
         </div>
@@ -57,35 +57,80 @@
 
       <section class="light" id="work">
         <div class="light-inner">
-          <div class="light-head mono">
-            <p class="dim">(01) Projects</p>
-            <p class="dim">(04)</p>
-          </div>
+          <h2 class="projects-title">Projects <span class="mono">(04)</span></h2>
           <div class="projects">
-            <a class="project" href="#">
-              <span class="project-index mono">01</span>
-              <span class="project-title">Realtime Ray Tracer</span>
-              <span class="project-stack mono">WebGL · GLSL · TypeScript</span>
-              <span class="project-year mono">2026 ↗</span>
-            </a>
-            <a class="project" href="#">
-              <span class="project-index mono">02</span>
-              <span class="project-title">Distributed Task Queue</span>
-              <span class="project-stack mono">Go · Redis · gRPC</span>
-              <span class="project-year mono">2025 ↗</span>
-            </a>
-            <a class="project" href="#">
-              <span class="project-index mono">03</span>
-              <span class="project-title">Generative Terrain Engine</span>
-              <span class="project-stack mono">Three.js · Simplex Noise</span>
-              <span class="project-year mono">2025 ↗</span>
-            </a>
-            <a class="project" href="#">
-              <span class="project-index mono">04</span>
-              <span class="project-title">Campus Course Planner</span>
-              <span class="project-stack mono">React · Node · PostgreSQL</span>
-              <span class="project-year mono">2024 ↗</span>
-            </a>
+            <article class="project">
+              <button class="project-head" type="button" aria-expanded="false">
+                <span class="project-index mono">01</span>
+                <span class="project-title">PilotLog</span>
+                <span class="project-stack mono">TypeScript · Node.js · Fastify · PostgreSQL · PostGIS</span>
+                <span class="project-year mono">2026</span>
+              </button>
+              <div class="project-body">
+                <div class="project-body-inner">
+                  <div class="project-detail">
+                    <div class="project-summary">
+                      <p>A full-stack logbook and social app for student pilots. Log multi-leg flights, track progress toward FAA private pilot requirements, map routes automatically with ADS-B data, and share flights with friends. Built on a PostgreSQL schema that enforces logbook rules, 16,000+ U.S. airports in PostGIS, and a typed Fastify REST API.</p>
+                    </div>
+                    <div class="project-photo" style="--photo: url('/images/projects/pilotlog.jpg')" role="img" aria-label="PilotLog screenshot"></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="project">
+              <button class="project-head" type="button" aria-expanded="false">
+                <span class="project-index mono">02</span>
+                <span class="project-title">3D Flight Map Visualizer</span>
+                <span class="project-stack mono">React · Tailwind CSS · Deck.gl · MapLibre</span>
+                <span class="project-year mono">2025</span>
+              </button>
+              <div class="project-body">
+                <div class="project-body-inner">
+                  <div class="project-detail">
+                    <div class="project-summary">
+                      <p>An interactive 3D web app that animates 22,000+ flights over 23 years as arcs from origin to destination. Flight logs are parsed for ICAO airport codes into monthly JSON datasets of coordinates, and the interface is fully responsive on mobile and desktop.</p>
+                    </div>
+                    <div class="project-photo" style="--photo: url('/images/projects/flight-map.jpg')" role="img" aria-label="3D Flight Map Visualizer screenshot"></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="project">
+              <button class="project-head" type="button" aria-expanded="false">
+                <span class="project-index mono">03</span>
+                <span class="project-title">SkySouth Website</span>
+                <span class="project-stack mono">PHP · Tailwind CSS · Schema.org · SEO</span>
+                <span class="project-year mono">2026</span>
+              </button>
+              <div class="project-body">
+                <div class="project-body-inner">
+                  <div class="project-detail">
+                    <div class="project-summary">
+                      <p>A custom PHP theme with Tailwind CSS replacing SkySouth's legacy site, owning architecture, UI/UX and responsive implementation. An SEO-focused rebuild with structured data and a 301 redirect map grew active users by 652% and organic search sessions by 1,097% year over year.</p>
+                    </div>
+                    <div class="project-photo" style="--photo: url('/images/projects/skysouth.jpg')" role="img" aria-label="SkySouth Website screenshot"></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="project">
+              <button class="project-head" type="button" aria-expanded="false">
+                <span class="project-index mono">04</span>
+                <span class="project-title">Exam Validation Pipeline</span>
+                <span class="project-stack mono">Python · OpenCV · EasyOCR · Pearson</span>
+                <span class="project-year mono">2025</span>
+              </button>
+              <div class="project-body">
+                <div class="project-body-inner">
+                  <div class="project-detail">
+                    <div class="project-summary">
+                      <p>A Python image-processing pipeline that automatically validates millions of exams, saving over 100,000 hours of manual labor annually. It extracts data from scanned pages with EasyOCR and OpenCV, resumes long batch runs from JSON checkpoints, and cut false positives 25x through iterative interpretation logic.</p>
+                    </div>
+                    <div class="project-photo" style="--photo: url('/images/projects/pearson.jpg')" role="img" aria-label="Exam Validation Pipeline screenshot"></div>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>

@@ -901,48 +901,92 @@ body.nav-on-light .home-quiet .h-top::after {
 }
 
 .light {
+  --n: 4;
+  --step: 55vh;
   position: relative;
   z-index: 3;
-  min-height: 100svh;
+  height: calc(100svh + (var(--n) - 1) * var(--step));
   background: var(--fg);
   color: var(--bg);
-  scroll-margin-top: 0;
 }
 
 .light-inner {
-  min-height: 100svh;
-  padding: 16vh 7.5vw 10vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  padding: clamp(4.5rem, 12vh, 7rem) 7.5vw 2.5vh;
+  overflow: hidden;
 }
 
-.light-head {
+.projects-title {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  padding-bottom: 1.2rem;
+  margin: 0 0 min(2vh, 1rem);
+  font-size: min(10vw, 17vh);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.projects-title .mono {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: color-mix(in srgb, var(--bg) 55%, transparent);
 }
 
 .projects {
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .project {
-  display: grid;
-  grid-template-columns: 3rem 1fr auto 5rem;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.6rem 0;
   border-top: 1px solid color-mix(in srgb, var(--bg) 30%, transparent);
-  color: var(--bg);
-  text-decoration: none;
-  transition: color 0.3s ease;
 }
 
 .project:last-child {
   border-bottom: 1px solid color-mix(in srgb, var(--bg) 30%, transparent);
 }
 
+.project-head {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto 5rem;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  padding: min(1.4vh, 0.8rem) 0;
+  border: 0;
+  background: none;
+  color: var(--bg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.35s ease, color 0.35s ease;
+}
+
+.project-head:hover,
+.project-head:focus-visible {
+  opacity: 1;
+  color: #8a4f22;
+  outline: none;
+}
+
+.project.is-active .project-head {
+  opacity: 1;
+}
+
+.project.is-active .project-head:hover {
+  color: var(--bg);
+}
+
 .project-title {
-  font-size: clamp(1.7rem, 4.4vw, 4.8rem);
+  font-size: min(3.6vw, 6.4vh);
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.04em;
@@ -950,21 +994,71 @@ body.nav-on-light .home-quiet .h-top::after {
   transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
+.project-head:hover .project-title {
+  transform: translateX(0.6rem);
+}
+
 .project-index,
 .project-stack {
-  color: color-mix(in srgb, var(--bg) 55%, transparent);
+  color: color-mix(in srgb, var(--bg) 60%, transparent);
 }
 
 .project-year {
   text-align: right;
 }
 
-.project:hover {
-  color: #8a4f22;
+.project-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.project:hover .project-title {
-  transform: translateX(0.8rem);
+.project.is-active .project-body {
+  grid-template-rows: 1fr;
+}
+
+.project-body-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.project-detail {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  padding: 0.4rem 0 min(2.2vh, 1.4rem);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.project.is-active .project-detail {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+.project-summary {
+  grid-column: 2;
+  max-width: 36rem;
+}
+
+.project-summary p {
+  font-size: max(0.9rem, 1.05vw);
+  line-height: 1.5;
+}
+
+.project-photo {
+  grid-column: 3;
+  height: min(30vh, 17rem);
+  aspect-ratio: 16 / 10;
+  border: 1px solid color-mix(in srgb, var(--bg) 25%, transparent);
+  background:
+    var(--photo, none) center / cover no-repeat,
+    repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--bg) 7%, transparent) 0 10px,
+      transparent 10px 20px
+    ),
+    color-mix(in srgb, var(--bg) 6%, var(--fg));
 }
 
 .light .dim {
@@ -981,12 +1075,45 @@ body.nav-on-light .home-quiet .h-top::after {
     display: none;
   }
 
-  .project {
+  .light {
+    height: auto;
+  }
+
+  .light-inner {
+    position: static;
+    height: auto;
+    padding: 5rem 1.25rem 3rem;
+    overflow: visible;
+  }
+
+  .projects-title {
+    font-size: 16vw;
+  }
+
+  .project-head {
     grid-template-columns: 2rem 1fr auto;
+  }
+
+  .project-title {
+    font-size: 6.4vw;
   }
 
   .project-stack {
     display: none;
+  }
+
+  .project-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .project-summary,
+  .project-photo {
+    grid-column: 1;
+  }
+
+  .project-photo {
+    width: 100%;
+    height: auto;
   }
 }
 
