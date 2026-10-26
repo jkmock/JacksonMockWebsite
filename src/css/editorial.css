@@ -835,6 +835,15 @@ body::before {
   }
 }
 
+/* E — name size and left gap */
+.home-quiet .h-hero {
+  left: 7.5vw;
+}
+
+.home-quiet .h-name {
+  font-size: 8.6vw;
+}
+
 /* E — accent color touches */
 .home-quiet ::selection {
   background: var(--accent);
