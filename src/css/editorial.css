@@ -836,6 +836,14 @@ body::before {
 }
 
 /* E — quiet field spans the page, fading in from the right */
+.home-quiet .c-vert-right {
+  font-size: 1.2vw;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.05em;
+  opacity: 1;
+}
+
 .h-bg-row {
   white-space: nowrap;
   overflow: hidden;
