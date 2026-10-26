@@ -844,6 +844,46 @@ body::before {
   font-size: 8.6vw;
 }
 
+/* E — blurb and action row */
+.home-quiet .h-blurb {
+  max-width: 26rem;
+  margin: 1.6vw 0 0;
+  font-size: max(0.85rem, 1vw);
+  line-height: 1.55;
+  color: var(--dim);
+}
+
+.home-quiet .h-actions {
+  flex-direction: row;
+  align-items: stretch;
+  width: auto;
+  gap: 0.7vw;
+  margin-top: 1.8vw;
+}
+
+.home-quiet .box-btn {
+  justify-content: center;
+}
+
+.home-quiet .box-btn.filled {
+  padding: 0.85rem 2rem;
+}
+
+.home-quiet .icon-btn {
+  aspect-ratio: 1;
+  padding: 0 0.85rem;
+}
+
+.home-quiet .icon-btn svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* E — accent color touches */
 .home-quiet ::selection {
   background: var(--accent);
@@ -871,22 +911,10 @@ body::before {
   color: var(--accent);
 }
 
-.home-quiet .box-btn span {
-  color: var(--accent);
-}
-
-.home-quiet .box-btn.filled span {
-  color: var(--bg);
-}
-
 .home-quiet .box-btn:hover,
 .home-quiet .box-btn.filled:hover {
   border-color: var(--accent);
   background: var(--accent);
-  color: var(--bg);
-}
-
-.home-quiet .box-btn:hover span {
   color: var(--bg);
 }
 
