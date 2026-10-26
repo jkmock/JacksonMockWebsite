@@ -188,6 +188,10 @@ if (projectsSection) {
     }
   };
 
+  // Re-measure whenever a project's content changes size (fonts, resize, styles).
+  const sizeObserver = new ResizeObserver(measure);
+  projects.forEach((project) => sizeObserver.observe(project.querySelector('.project-body-inner')));
+
   window.addEventListener('scroll', syncFromScroll, { passive: true });
   window.addEventListener('resize', setup);
   desktop.addEventListener('change', setup);

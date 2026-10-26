@@ -1012,7 +1012,7 @@ body.nav-on-light .home-quiet .h-top::after {
   display: grid;
   grid-template-columns: 3rem minmax(0, 1fr) auto;
   gap: 1.5rem;
-  padding: 0.4rem 0 min(2.2vh, 1.4rem);
+  padding: 0.4rem 0 min(3.6vh, 2.6rem);
   opacity: var(--open, 0);
 }
 
