@@ -1361,11 +1361,24 @@ body.nav-on-light .home-quiet .h-top::after {
   color: var(--accent);
 }
 
-.home-quiet .box-btn:hover,
-.home-quiet .box-btn.filled:hover {
+.home-quiet .box-btn {
   border-color: var(--accent);
+  color: var(--accent);
+}
+
+.home-quiet .box-btn:hover {
   background: var(--accent);
   color: var(--bg);
+}
+
+.home-quiet .box-btn.filled {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.home-quiet .box-btn.filled:hover {
+  background: transparent;
+  color: var(--accent);
 }
 
 /* E — quiet field spans the page, fading in from the right */
