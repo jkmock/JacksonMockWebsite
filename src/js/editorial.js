@@ -85,3 +85,21 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     delay: 0.3,
   });
 }
+
+const navBar = document.querySelector('.home-quiet .h-top');
+const lightSection = document.querySelector('.light');
+
+if (navBar && lightSection) {
+  const updateNavTheme = () => {
+    const navBox = navBar.getBoundingClientRect();
+    const navMid = navBox.top + navBox.height / 2;
+    const lightBox = lightSection.getBoundingClientRect();
+    document.body.classList.toggle(
+      'nav-on-light',
+      lightBox.top <= navMid && lightBox.bottom > navMid,
+    );
+  };
+  window.addEventListener('scroll', updateNavTheme, { passive: true });
+  window.addEventListener('resize', updateNavTheme);
+  updateNavTheme();
+}

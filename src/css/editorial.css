@@ -849,6 +849,116 @@ body::before {
   opacity: 1;
 }
 
+/* E — scrolling: fixed quiet text and nav, light section slides over */
+html:has(.home-quiet) {
+  scroll-behavior: smooth;
+}
+
+.home-quiet .h-bg {
+  position: fixed;
+}
+
+.home-quiet .h-top {
+  position: fixed;
+  z-index: 20;
+  color: var(--fg);
+  transition: color 0.3s ease;
+}
+
+.home-quiet .h-top::before,
+.home-quiet .h-top::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -5.5vw;
+  right: -6vw;
+  top: calc(var(--pad) * -1);
+  height: calc(100% + var(--pad) + 2.2rem);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.home-quiet .h-top::before {
+  background: linear-gradient(color-mix(in srgb, var(--bg) 92%, transparent), transparent);
+}
+
+.home-quiet .h-top::after {
+  background: linear-gradient(color-mix(in srgb, var(--fg) 94%, transparent), transparent);
+  opacity: 0;
+}
+
+body.nav-on-light .home-quiet .h-top {
+  --accent: #8a4f22;
+  color: var(--bg);
+}
+
+body.nav-on-light .home-quiet .h-top::before {
+  opacity: 0;
+}
+
+body.nav-on-light .home-quiet .h-top::after {
+  opacity: 1;
+}
+
+.light {
+  position: relative;
+  z-index: 3;
+  min-height: 100svh;
+  background: var(--fg);
+  color: var(--bg);
+  scroll-margin-top: 0;
+}
+
+.light-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6vh;
+  min-height: 100svh;
+  padding: 16vh 7.5vw 8vh;
+}
+
+.light-label {
+  color: color-mix(in srgb, var(--bg) 55%, transparent);
+}
+
+.light-title {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.4rem, 6.4vw, 7rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.light-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--bg) 35%, transparent);
+}
+
+.light .dim {
+  color: color-mix(in srgb, var(--bg) 55%, transparent);
+}
+
+@media (max-width: 860px) {
+  .home-quiet .h-top {
+    position: static;
+  }
+
+  .home-quiet .h-top::before,
+  .home-quiet .h-top::after {
+    display: none;
+  }
+
+  .light-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* E — name size and left gap */
 .home-quiet .h-hero {
   left: 7.5vw;
