@@ -1157,6 +1157,118 @@ body.nav-on-light .home-quiet .h-top::after {
   }
 }
 
+/* E — Experience (dark section after the pinned projects) */
+.dark {
+  position: relative;
+  z-index: 3;
+  color: var(--fg);
+}
+
+.dark-inner {
+  padding: 14vh 7.5vw 14vh;
+}
+
+.dark .projects-title {
+  color: var(--fg);
+}
+
+.dark .projects-title .mono {
+  color: color-mix(in srgb, var(--fg) 55%, transparent);
+}
+
+.jobs {
+  display: flex;
+  flex-direction: column;
+  margin-top: min(4vh, 2rem);
+}
+
+.job {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  padding: 2.2rem 0 2.6rem;
+  border-top: 1px solid color-mix(in srgb, var(--fg) 28%, transparent);
+}
+
+.job:last-child {
+  border-bottom: 1px solid color-mix(in srgb, var(--fg) 28%, transparent);
+}
+
+.job-index {
+  font-size: max(0.95rem, 1.15vw);
+  color: color-mix(in srgb, var(--fg) 60%, transparent);
+}
+
+.job-company {
+  margin: 0;
+  font-size: clamp(1.8rem, 3.6vw, 4rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.job-role {
+  margin: 0.8rem 0 1.4rem;
+  font-size: max(0.85rem, 1vw);
+  color: var(--accent);
+}
+
+.job-points {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-width: 46rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.job-points li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: max(0.9rem, 1.05vw);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--fg) 86%, transparent);
+}
+
+.job-points li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.job-meta {
+  font-size: max(0.85rem, 1vw);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.job-meta .dim {
+  color: color-mix(in srgb, var(--fg) 55%, transparent);
+}
+
+@media (max-width: 860px) {
+  .dark-inner {
+    padding: 4rem 1.25rem;
+  }
+
+  .job {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .job-meta {
+    grid-column: 2;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .dark .projects-title {
+    font-size: 16vw;
+  }
+}
+
 /* E — name size and left gap */
 .home-quiet .h-hero {
   left: 7.5vw;
