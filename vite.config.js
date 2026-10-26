@@ -12,6 +12,7 @@ export default defineConfig({
         poster: resolve(import.meta.dirname, 'poster.html'),
         ghost: resolve(import.meta.dirname, 'ghost.html'),
         collage: resolve(import.meta.dirname, 'collage.html'),
+        home: resolve(import.meta.dirname, 'home.html'),
       },
     },
   },
