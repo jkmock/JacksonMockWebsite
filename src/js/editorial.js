@@ -4,6 +4,10 @@ document.querySelectorAll('.marquee-track').forEach((track) => {
   track.innerHTML += track.innerHTML;
 });
 
+document.querySelectorAll('[data-repeat]').forEach((el) => {
+  el.textContent = `${el.dataset.repeat} `.repeat(120);
+});
+
 const clocks = document.querySelectorAll('[data-clock]');
 
 function tick() {

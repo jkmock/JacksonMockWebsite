@@ -640,6 +640,36 @@ body::before {
   gap: clamp(1rem, 3vw, 3rem);
 }
 
+.h-bg {
+  position: absolute;
+  z-index: 0;
+  left: 5vw;
+  top: 7%;
+  width: 43vw;
+  height: 88%;
+  overflow: hidden;
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: max(0.6rem, 0.72vw);
+  line-height: 1.9;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  word-break: break-word;
+  color: color-mix(in srgb, var(--fg) 11%, transparent);
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to right, #000 60%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 60%, transparent 100%);
+}
+
+.h-bg-vert {
+  left: 49.2%;
+  width: auto;
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
 .h-hero {
   position: absolute;
   left: 5vw;
@@ -756,7 +786,8 @@ body::before {
   }
 
   .home .c-vert,
-  .h-badge {
+  .h-badge,
+  .h-bg {
     display: none;
   }
 
