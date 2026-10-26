@@ -8,255 +8,74 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/src/css/swiss.css" />
   </head>
   <body>
-    <div class="preloader" id="preloader">
-      <div class="preloader-count"><span id="preloader-number">0</span></div>
-    </div>
+    <div class="glow" aria-hidden="true"></div>
 
-    <div class="cursor-dot" id="cursor-dot"></div>
-
-    <header class="s-header">
-      <a class="s-logo" href="/swiss.html">JM</a>
-      <nav class="s-nav">
-        <a href="#work" data-hover>Work</a>
-        <a href="#about" data-hover>About</a>
-        <a href="#contact" data-hover>Contact</a>
+    <header class="nav">
+      <a class="logo" href="/swiss.html">Jackson Mock<span class="logo-dot"></span></a>
+      <nav class="nav-links">
+        <a class="is-active" href="#">Professional</a>
+        <a href="#">Personal</a>
+        <a href="#contact">Contact</a>
       </nav>
-      <div class="s-header-meta">
-        <span id="clock">00:00:00</span>
-      </div>
     </header>
 
-    <main>
-      <section class="s-hero" id="hero">
-        <span class="s-mark s-shape" data-speed="0.15" style="top:9%; left:7%; font-size:1.3rem;">+</span>
-        <span class="s-mark s-shape" data-speed="0.25" style="top:16%; right:12%; font-size:0.95rem;">–</span>
-        <span class="s-mark s-shape" data-speed="0.1" style="top:38%; left:88%; font-size:1.1rem;">+</span>
-        <span class="s-mark s-shape" data-speed="0.3" style="top:58%; left:5%; font-size:0.9rem;">–</span>
-        <span class="s-mark s-shape" data-speed="0.18" style="top:72%; right:8%; font-size:1.4rem;">+</span>
-        <span class="s-mark s-shape" data-speed="0.22" style="bottom:14%; left:34%; font-size:0.95rem;">–</span>
-        <span class="s-mark s-shape" data-speed="0.12" style="bottom:22%; right:30%; font-size:1.2rem;">+</span>
-        <span class="s-mark s-shape" data-speed="0.28" style="top:24%; left:48%; font-size:0.9rem;">+</span>
-        <span class="s-mark s-shape" data-speed="0.2" style="bottom:34%; right:16%; font-size:1rem;">–</span>
-        <div class="s-hero-grid">
-          <p class="s-eyebrow reveal-line">Portfolio — 2026</p>
-          <h1 class="s-hero-title">
-            <span class="split-line"><span class="split-line-inner">Jackson</span></span>
-            <span class="split-line"><span class="split-line-inner">Mock</span></span>
-          </h1>
-          <div class="s-hero-side">
-            <p class="reveal-line">Software Engineer building at the intersection of systems, interfaces, and 3D on the web.</p>
-            <p class="reveal-line s-hero-location">Based in the United States — available for select work.</p>
+    <main class="hero">
+      <div class="hero-content">
+        <p class="hero-role" data-reveal>Software Engineer</p>
+        <h1 class="hero-title" data-reveal>
+          <span class="hero-hello">Hello I'm</span>
+          <span class="hero-name">Jackson<br />Mock</span>
+        </h1>
+        <p class="hero-tagline" data-reveal>
+          Pragmatic, detail-oriented | Systems, Web &amp; 3D Engineering | United States
+        </p>
+        <div class="hero-actions" data-reveal>
+          <a class="btn" href="#">
+            View CV
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+          </a>
+          <div class="socials">
+            <a href="#" aria-label="GitHub">
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" /></svg>
+            </a>
           </div>
-        </div>
-        <div class="s-scroll-cue">
-          <span>Scroll</span>
-          <div class="s-scroll-line"></div>
-        </div>
-      </section>
-
-      <div class="s-marquee">
-        <div class="s-marquee-track">
-          <span>Software Engineering</span>
-          <span>★</span>
-          <span>Systems Design</span>
-          <span>★</span>
-          <span>Creative Coding</span>
-          <span>★</span>
-          <span>3D on the Web</span>
-          <span>★</span>
-          <span>Open to Work</span>
-          <span>★</span>
-          <span>Software Engineering</span>
-          <span>★</span>
-          <span>Systems Design</span>
-          <span>★</span>
-          <span>Creative Coding</span>
-          <span>★</span>
-          <span>3D on the Web</span>
-          <span>★</span>
-          <span>Open to Work</span>
-          <span>★</span>
         </div>
       </div>
 
-      <section class="s-section s-section--cream" id="about">
-        <div class="s-wipe" data-origin="bottom"></div>
-        <div class="s-shape s-shape--outline-circle"></div>
-        <div class="s-section-inner">
-          <div class="s-section-head">
-            <span class="s-index">01</span>
-            <h2 class="reveal-up">About</h2>
-          </div>
-          <div class="s-about-grid">
-            <p class="s-about-copy reveal-up">
-              I'm a software engineer who likes working across the whole stack — from backend
-              systems and APIs to real-time 3D graphics in the browser. I care about clean
-              architecture as much as I care about how something feels to use. This site is a
-              running log of that: part portfolio, part playground.
-            </p>
-            <div class="s-stats">
-              <div class="s-stat reveal-up">
-                <span class="s-stat-number" data-count="6">0</span>
-                <span class="s-stat-label">Years Coding</span>
-              </div>
-              <div class="s-stat reveal-up">
-                <span class="s-stat-number" data-count="24">0</span>
-                <span class="s-stat-label">Projects Shipped</span>
-              </div>
-              <div class="s-stat reveal-up">
-                <span class="s-stat-number" data-count="9">0</span>
-                <span class="s-stat-label">Technologies</span>
-              </div>
-              <div class="s-stat reveal-up">
-                <span class="s-stat-number" data-count="100" data-suffix="%">0</span>
-                <span class="s-stat-label">Curiosity-Driven</span>
-              </div>
-            </div>
-          </div>
+      <section class="stats" id="contact" data-reveal>
+        <div class="stat">
+          <span class="stat-number" data-count="6">6</span>
+          <span class="stat-label">Years<br />coding</span>
         </div>
-      </section>
-
-      <section class="s-section s-section--navy" id="stack">
-        <div class="s-wipe" data-origin="top"></div>
-        <div class="s-shape s-shape--dots"></div>
-        <div class="s-section-inner">
-          <div class="s-section-head">
-            <span class="s-index">02</span>
-            <h2 class="reveal-up">Stack</h2>
-          </div>
-          <div class="s-stack-grid">
-            <div class="s-stack-col reveal-up">
-              <h3>Languages</h3>
-              <ul>
-                <li>TypeScript</li>
-                <li>Python</li>
-                <li>Go</li>
-                <li>C++</li>
-              </ul>
-            </div>
-            <div class="s-stack-col reveal-up">
-              <h3>Frontend</h3>
-              <ul>
-                <li>React</li>
-                <li>Three.js</li>
-                <li>WebGL</li>
-                <li>GSAP</li>
-              </ul>
-            </div>
-            <div class="s-stack-col reveal-up">
-              <h3>Backend</h3>
-              <ul>
-                <li>Node.js</li>
-                <li>PostgreSQL</li>
-                <li>Docker</li>
-                <li>AWS</li>
-              </ul>
-            </div>
-            <div class="s-stack-col reveal-up">
-              <h3>Tools</h3>
-              <ul>
-                <li>Git</li>
-                <li>Figma</li>
-                <li>Blender</li>
-                <li>Linux</li>
-              </ul>
-            </div>
-          </div>
+        <div class="stat">
+          <span class="stat-number" data-count="24">24</span>
+          <span class="stat-label">Projects<br />shipped</span>
         </div>
-      </section>
-
-      <section class="s-section s-section--ink" id="work">
-        <div class="s-wipe" data-origin="bottom"></div>
-        <div class="s-shape s-shape--stripes"></div>
-        <div class="s-section-inner">
-          <div class="s-section-head">
-            <span class="s-index">03</span>
-            <h2 class="reveal-up">Selected Work</h2>
-          </div>
-          <div class="s-work-list">
-            <a class="s-work-row" href="#" data-hover data-color="#e3252a">
-              <span class="s-work-index">01</span>
-              <span class="s-work-title">Realtime Ray Tracer</span>
-              <span class="s-work-tags">WebGL · GLSL · TypeScript</span>
-              <span class="s-work-arrow">↗</span>
-            </a>
-            <a class="s-work-row" href="#" data-hover data-color="#2952e3">
-              <span class="s-work-index">02</span>
-              <span class="s-work-title">Distributed Task Queue</span>
-              <span class="s-work-tags">Go · Redis · gRPC</span>
-              <span class="s-work-arrow">↗</span>
-            </a>
-            <a class="s-work-row" href="#" data-hover data-color="#0d9488">
-              <span class="s-work-index">03</span>
-              <span class="s-work-title">Generative Terrain Engine</span>
-              <span class="s-work-tags">Three.js · Simplex Noise · React</span>
-              <span class="s-work-arrow">↗</span>
-            </a>
-            <a class="s-work-row" href="#" data-hover data-color="#f2b705">
-              <span class="s-work-index">04</span>
-              <span class="s-work-title">Personal Finance API</span>
-              <span class="s-work-tags">TypeScript · PostgreSQL · Docker</span>
-              <span class="s-work-arrow">↗</span>
-            </a>
-          </div>
+        <div class="stat">
+          <span class="stat-number" data-count="9">9</span>
+          <span class="stat-label">Technologies<br />used</span>
         </div>
-      </section>
-
-      <section class="s-section s-section--amber" id="experience">
-        <div class="s-wipe" data-origin="top"></div>
-        <div class="s-shape s-shape--triangle"></div>
-        <div class="s-section-inner">
-          <div class="s-section-head">
-            <span class="s-index">04</span>
-            <h2 class="reveal-up">Experience</h2>
-          </div>
-          <div class="s-timeline">
-            <div class="s-timeline-row reveal-up">
-              <span class="s-timeline-date">2024 — Present</span>
-              <span class="s-timeline-role">Software Engineer, Company Name</span>
-              <span class="s-timeline-desc">Building and scaling core product systems.</span>
-            </div>
-            <div class="s-timeline-row reveal-up">
-              <span class="s-timeline-date">2022 — 2024</span>
-              <span class="s-timeline-role">Software Engineer Intern, Company Name</span>
-              <span class="s-timeline-desc">Shipped features across the full stack.</span>
-            </div>
-            <div class="s-timeline-row reveal-up">
-              <span class="s-timeline-date">2020 — 2024</span>
-              <span class="s-timeline-role">B.S. Computer Science, University Name</span>
-              <span class="s-timeline-desc">Focus on systems and graphics.</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="s-contact s-section--red" id="contact">
-        <div class="s-wipe" data-origin="bottom"></div>
-        <div class="s-shape s-shape--big-circle"></div>
-        <div class="s-section-inner s-contact-inner">
-          <span class="s-index">05</span>
-          <h2 class="s-contact-title reveal-up">
-            <a href="mailto:hello@jacksonmock.com" data-hover data-magnetic>Let's talk</a>
-          </h2>
-          <div class="s-contact-links reveal-up">
-            <a href="#" data-hover>GitHub</a>
-            <a href="#" data-hover>LinkedIn</a>
-            <a href="#" data-hover>X / Twitter</a>
-          </div>
+        <div class="stat">
+          <span class="stat-number" data-count="12">12</span>
+          <span class="stat-label">Open source<br />contributions</span>
         </div>
       </section>
     </main>
-
-    <footer class="s-footer">
-      <span>© 2026 Jackson Mock</span>
-      <a href="#hero" data-hover>Back to top ↑</a>
-    </footer>
 
     <script type="module" src="/src/js/swiss.js"></script>
   </body>
