@@ -902,7 +902,7 @@ body.nav-on-light .home-quiet .h-top::after {
 
 .light {
   --n: 4;
-  --step: 55vh;
+  --step: 40vh;
   position: relative;
   z-index: 3;
   height: calc(100svh + (var(--n) - 1) * var(--step));
@@ -966,8 +966,8 @@ body.nav-on-light .home-quiet .h-top::after {
   font: inherit;
   text-align: left;
   cursor: pointer;
-  opacity: 0.4;
-  transition: opacity 0.35s ease, color 0.35s ease;
+  opacity: calc(0.4 + 0.6 * var(--open, 0));
+  transition: color 0.35s ease;
 }
 
 .project-head:hover,
@@ -975,10 +975,6 @@ body.nav-on-light .home-quiet .h-top::after {
   opacity: 1;
   color: #8a4f22;
   outline: none;
-}
-
-.project.is-active .project-head {
-  opacity: 1;
 }
 
 .project.is-active .project-head:hover {
@@ -1008,37 +1004,43 @@ body.nav-on-light .home-quiet .h-top::after {
 }
 
 .project-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.project.is-active .project-body {
-  grid-template-rows: 1fr;
-}
-
-.project-body-inner {
-  min-height: 0;
+  height: calc(var(--open, 0) * var(--natural, 0px));
   overflow: hidden;
 }
 
 .project-detail {
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
   gap: 1.5rem;
   padding: 0.4rem 0 min(2.2vh, 1.4rem);
-  opacity: 0;
-  transition: opacity 0.45s ease;
-}
-
-.project.is-active .project-detail {
-  opacity: 1;
-  transition-delay: 0.2s;
+  opacity: var(--open, 0);
 }
 
 .project-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
   grid-column: 2;
   max-width: 36rem;
+}
+
+.project-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.3rem;
+  border: 2px solid var(--bg);
+  color: var(--bg);
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.project-btn:hover,
+.project-btn:focus-visible {
+  background: var(--bg);
+  color: var(--fg);
+  outline: none;
 }
 
 .project-summary p {
@@ -1092,6 +1094,18 @@ body.nav-on-light .home-quiet .h-top::after {
 
   .project-head {
     grid-template-columns: 2rem 1fr auto;
+  }
+
+  .project-body {
+    height: auto;
+  }
+
+  .project:not(.is-active) .project-body {
+    display: none;
+  }
+
+  .project-detail {
+    opacity: 1;
   }
 
   .project-title {

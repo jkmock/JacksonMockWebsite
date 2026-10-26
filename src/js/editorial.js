@@ -109,17 +109,31 @@ const projectsSection = document.querySelector('.light');
 if (projectsSection) {
   const projects = [...projectsSection.querySelectorAll('.project')];
   const desktop = window.matchMedia('(min-width: 861px)');
-  let active = -1;
-  let lockedUntil = 0;
+  const lastIndex = projects.length - 1;
+  const STEP = 0.4; // viewport heights of scrolling per project
+  const SMOOTHING = 0.14; // portion of the remaining gap closed per 60fps frame
+
+  let target = 0;
+  let current = 0;
+  let frame = null;
+  let lastTime = 0;
+  let activeIndex = -1;
 
   projectsSection.style.setProperty('--n', projects.length);
 
-  const stepPx = () => window.innerHeight * 0.55;
+  const stepPx = () => window.innerHeight * STEP;
   const sectionTop = () => projectsSection.getBoundingClientRect().top + window.scrollY;
 
-  const setActive = (index) => {
-    if (index === active) return;
-    active = index;
+  const measure = () => {
+    projects.forEach((project) => {
+      const inner = project.querySelector('.project-body-inner');
+      project.style.setProperty('--natural', `${inner.offsetHeight}px`);
+    });
+  };
+
+  const setActiveClass = (index) => {
+    if (index === activeIndex) return;
+    activeIndex = index;
     projects.forEach((project, i) => {
       const on = i === index;
       project.classList.toggle('is-active', on);
@@ -127,24 +141,67 @@ if (projectsSection) {
     });
   };
 
-  // Pinned panel: which project is open is driven by scroll position.
+  // Each project's openness is a direct function of scroll progress, so
+  // fast scrolling passes through instantly and slow scrolling animates.
+  const render = () => {
+    projects.forEach((project, i) => {
+      const open = Math.max(0, 1 - Math.abs(current - i));
+      project.style.setProperty('--open', open.toFixed(3));
+    });
+    setActiveClass(Math.min(lastIndex, Math.max(0, Math.round(current))));
+  };
+
+  const tick = (time) => {
+    const dt = Math.min(64, time - (lastTime || time));
+    lastTime = time;
+    const gap = target - current;
+    if (Math.abs(gap) < 0.0005) {
+      current = target;
+      frame = null;
+      lastTime = 0;
+      render();
+      return;
+    }
+    current += gap * (1 - Math.pow(1 - SMOOTHING, dt / 16.67));
+    render();
+    frame = requestAnimationFrame(tick);
+  };
+
   const syncFromScroll = () => {
-    if (!desktop.matches || performance.now() < lockedUntil) return;
-    const progress = Math.max(0, window.scrollY - sectionTop());
-    setActive(Math.min(projects.length - 1, Math.round(progress / stepPx())));
+    if (!desktop.matches) return;
+    const progress = (window.scrollY - sectionTop()) / stepPx();
+    target = Math.min(lastIndex, Math.max(0, progress));
+    if (!frame) frame = requestAnimationFrame(tick);
+  };
+
+  const setup = () => {
+    measure();
+    if (desktop.matches) {
+      const progress = (window.scrollY - sectionTop()) / stepPx();
+      target = current = Math.min(lastIndex, Math.max(0, progress));
+      render();
+    } else {
+      const index = Math.max(0, activeIndex);
+      activeIndex = -1;
+      projects.forEach((project, i) => project.style.setProperty('--open', i === index ? '1' : '0'));
+      setActiveClass(index);
+    }
   };
 
   window.addEventListener('scroll', syncFromScroll, { passive: true });
-  window.addEventListener('resize', syncFromScroll);
-  setActive(0);
+  window.addEventListener('resize', setup);
+  desktop.addEventListener('change', setup);
+  setup();
+  document.fonts.ready.then(setup);
 
   projects.forEach((project, i) => {
     project.querySelector('.project-head').addEventListener('click', () => {
-      setActive(i);
-      if (!desktop.matches) return;
-      lockedUntil = performance.now() + 1500;
-      window.scrollTo({ top: sectionTop() + i * stepPx(), behavior: 'smooth' });
-      setTimeout(syncFromScroll, 1550);
+      if (desktop.matches) {
+        window.scrollTo({ top: sectionTop() + i * stepPx(), behavior: 'smooth' });
+      } else {
+        projects.forEach((p, k) => p.style.setProperty('--open', k === i ? '1' : '0'));
+        setActiveClass(i);
+      }
     });
   });
 }
