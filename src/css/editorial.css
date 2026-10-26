@@ -854,8 +854,9 @@ body::before {
 }
 
 .home-quiet .h-actions {
+  --btn-h: 3.4rem;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
   width: auto;
   gap: 0.7vw;
   margin-top: 1.8vw;
@@ -866,12 +867,14 @@ body::before {
 }
 
 .home-quiet .box-btn.filled {
-  padding: 0.85rem 2rem;
+  height: var(--btn-h);
+  padding: 0 2rem;
 }
 
 .home-quiet .icon-btn {
-  aspect-ratio: 1;
-  padding: 0 0.85rem;
+  width: var(--btn-h);
+  height: var(--btn-h);
+  padding: 0;
 }
 
 .home-quiet .icon-btn svg {
