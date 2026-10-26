@@ -1051,7 +1051,7 @@ body.nav-on-light .home-quiet .h-top::after {
 .project-photo {
   grid-column: 3;
   height: min(30vh, 17rem);
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   border: 1px solid color-mix(in srgb, var(--bg) 25%, transparent);
   background:
     var(--photo, none) center / cover no-repeat,
