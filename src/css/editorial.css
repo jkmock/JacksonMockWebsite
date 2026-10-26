@@ -835,6 +835,20 @@ body::before {
   }
 }
 
+/* E — side bars share the quiet background text color */
+.home-quiet {
+  --quiet-text: color-mix(in srgb, var(--fg) 11%, transparent);
+}
+
+.home-quiet .h-bg,
+.home-quiet .c-vert {
+  color: var(--quiet-text);
+}
+
+.home-quiet .c-vert {
+  opacity: 1;
+}
+
 /* E — name size and left gap */
 .home-quiet .h-hero {
   left: 7.5vw;
