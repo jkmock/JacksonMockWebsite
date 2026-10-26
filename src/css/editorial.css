@@ -999,8 +999,34 @@ body.nav-on-light .home-quiet .h-top::after {
   color: color-mix(in srgb, var(--bg) 60%, transparent);
 }
 
+.project-index {
+  font-size: max(0.95rem, 1.15vw);
+}
+
+.project-stack,
+.project-year {
+  font-size: max(0.85rem, 1vw);
+}
+
+.project-stack {
+  max-width: clamp(12rem, 18vw, 22rem);
+  line-height: 1.35;
+  text-align: right;
+}
+
 .project-year {
   text-align: right;
+  white-space: nowrap;
+}
+
+@media (min-width: 861px) and (max-width: 1180px) {
+  .project-head {
+    grid-template-columns: 3rem 1fr 5rem;
+  }
+
+  .project-stack {
+    display: none;
+  }
 }
 
 .project-body {
@@ -1011,6 +1037,7 @@ body.nav-on-light .home-quiet .h-top::after {
 .project-detail {
   display: grid;
   grid-template-columns: 3rem minmax(0, 1fr) auto;
+  align-items: center;
   gap: 1.5rem;
   padding: 0.4rem 0 min(3.6vh, 2.6rem);
   opacity: var(--open, 0);
