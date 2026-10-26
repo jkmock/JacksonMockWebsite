@@ -8,7 +8,7 @@
   --line: rgba(217, 168, 108, 0.05);
   --glow-a: rgba(138, 90, 52, 0.3);
   --glow-b: rgba(217, 168, 108, 0.07);
-  --grain: 0.13;
+  --grain: 0.3;
 }
 
 :root[data-theme='grey'] {

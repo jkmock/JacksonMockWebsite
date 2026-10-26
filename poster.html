@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jackson Mock — Layout A</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/css/editorial.css" />
+  </head>
+  <body class="theme-dark">
+    <main class="poster">
+      <div class="poster-top mono" data-in>
+        <span>Jackson Mock ®</span>
+        <nav>
+          <a href="#">Work</a>
+          <a href="#">About</a>
+          <a href="#">Playground</a>
+          <a href="#">Contact</a>
+        </nav>
+        <span>Raleigh, NC <b data-clock>00:00</b> ET</span>
+      </div>
+
+      <div class="vert vert-left" data-in data-rot>
+        Computer Science ✦ Computer Science ✦ Computer Science ✦ Computer Science ✦
+      </div>
+      <div class="vert vert-right" data-in>
+        North Carolina State University ✦ North Carolina State University ✦
+      </div>
+
+      <section class="poster-hero">
+        <h1 class="poster-title" data-in>Computer<br />Science</h1>
+        <div class="poster-echo" aria-hidden="true" data-in>
+          <span>North Carolina State University</span>
+          <span>North Carolina State University</span>
+          <span>North Carolina State University</span>
+          <span>North Carolina State University</span>
+        </div>
+        <div class="stamp mono" data-in data-rot>Est. 1887<br />NC State</div>
+      </section>
+
+      <section class="poster-info">
+        <div class="mono" data-in>
+          <p class="dim">(01) Education</p>
+          <p>North Carolina State University</p>
+          <p>Computer Science</p>
+          <p>Raleigh, North Carolina</p>
+        </div>
+        <div class="poster-actions" data-in>
+          <a class="box-btn filled" href="#"><span>✦</span>View work<span>✦</span></a>
+          <a class="box-btn" href="#"><span>✦</span>Contact<span>✦</span></a>
+        </div>
+        <div class="mono right" data-in>
+          <p class="dim">(02) Focus</p>
+          <p>Software Engineering</p>
+          <p>Systems · Web · 3D</p>
+          <p>Portfolio 2026</p>
+        </div>
+      </section>
+
+      <div class="marquee marquee-poster mono" aria-hidden="true">
+        <div class="marquee-track">
+          <span>North Carolina State University ✦ Computer Science ✦ Jackson Mock ✦ Raleigh, NC ✦ Go Pack ✦</span>
+          <span>North Carolina State University ✦ Computer Science ✦ Jackson Mock ✦ Raleigh, NC ✦ Go Pack ✦</span>
+        </div>
+      </div>
+    </main>
+
+    <nav class="layout-nav" aria-label="Layouts">
+      <span>Layout</span>
+      <a href="/poster.html" aria-current="page">A</a>
+      <a href="/ghost.html">B</a>
+      <a href="/collage.html">C</a>
+    </nav>
+
+    <script type="module" src="/src/js/editorial.js"></script>
+  </body>
+</html>
