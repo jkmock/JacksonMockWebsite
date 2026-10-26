@@ -1,10 +1,29 @@
-:root {
-  --bg: #15100b;
+:root,
+:root[data-theme='brown'] {
+  --bg: #16100b;
   --fg: #f0e4d0;
+  --hello: #f0e4d0;
   --muted: #b9a68a;
   --accent: #d9a86c;
-  --accent-deep: #8a5a34;
-  --line: rgba(217, 168, 108, 0.07);
+  --line: rgba(217, 168, 108, 0.05);
+  --glow-a: rgba(138, 90, 52, 0.3);
+  --glow-b: rgba(217, 168, 108, 0.07);
+  --grain: 0.13;
+}
+
+:root[data-theme='grey'] {
+  --bg: #202020;
+  --fg: #f2f2f2;
+  --hello: #a6a6a6;
+  --muted: #9b9b9b;
+  --accent: #ffffff;
+  --line: rgba(255, 255, 255, 0.045);
+  --glow-a: rgba(255, 255, 255, 0.07);
+  --glow-b: rgba(255, 255, 255, 0.03);
+  --grain: 0.15;
+}
+
+:root {
   --pad-x: clamp(1.5rem, 4vw, 5rem);
   --content-x: clamp(1.5rem, 13vw, 16.5rem);
 }
@@ -21,9 +40,10 @@ body {
   margin: 0;
   min-height: 100svh;
   background:
-    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 64px 64px,
-    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 96px 96px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 96px 96px,
     var(--bg);
+  transition: background-color 0.4s ease;
   color: var(--fg);
   font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
   -webkit-font-smoothing: antialiased;
@@ -41,8 +61,65 @@ a {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(60rem 36rem at 12% -6%, rgba(138, 90, 52, 0.38), transparent 70%),
-    radial-gradient(48rem 30rem at 95% 105%, rgba(217, 168, 108, 0.1), transparent 70%);
+    radial-gradient(60rem 36rem at 12% -6%, var(--glow-a), transparent 70%),
+    radial-gradient(48rem 30rem at 95% 105%, var(--glow-b), transparent 70%),
+    radial-gradient(ellipse at 50% 40%, transparent 45%, rgba(0, 0, 0, 0.55) 120%);
+}
+
+/* Fine grain plus a low-frequency mottle for texture */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+body::before {
+  opacity: var(--grain);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0.9 0 0 0 -0.15'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+body::after {
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1.2 0 0 0 -0.2'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>");
+}
+
+/* Theme switcher */
+.theme-switch {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 10;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  font-size: 0.75rem;
+}
+
+.theme-switch button {
+  padding: 0.45rem 1.1rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.theme-switch button.is-active {
+  background: var(--accent);
+  color: var(--bg);
 }
 
 /* Nav */
@@ -134,7 +211,7 @@ a {
 }
 
 .hero-hello {
-  color: var(--fg);
+  color: var(--hello);
 }
 
 .hero-name {

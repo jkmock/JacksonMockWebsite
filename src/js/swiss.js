@@ -1,5 +1,23 @@
 import gsap from 'gsap';
 
+const root = document.documentElement;
+const choices = document.querySelectorAll('[data-theme-choice]');
+
+function setTheme(name) {
+  root.dataset.theme = name;
+  choices.forEach((btn) => btn.classList.toggle('is-active', btn.dataset.themeChoice === name));
+  try {
+    localStorage.setItem('theme', name);
+  } catch {}
+}
+
+let saved = 'brown';
+try {
+  saved = localStorage.getItem('theme') || saved;
+} catch {}
+setTheme(saved);
+choices.forEach((btn) => btn.addEventListener('click', () => setTheme(btn.dataset.themeChoice)));
+
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (!reduceMotion) {
