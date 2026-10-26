@@ -840,13 +840,8 @@ body::before {
   --quiet-text: color-mix(in srgb, var(--fg) 11%, transparent);
 }
 
-.home-quiet .h-bg,
-.home-quiet .c-vert {
+.home-quiet .h-bg {
   color: var(--quiet-text);
-}
-
-.home-quiet .c-vert {
-  opacity: 1;
 }
 
 /* E — scrolling: fixed quiet text and nav, light section slides over */
@@ -856,6 +851,8 @@ html:has(.home-quiet) {
 
 .home-quiet .h-bg {
   position: fixed;
+  top: 8.5%;
+  height: 86.5%;
 }
 
 .home-quiet .h-top {
@@ -1269,6 +1266,15 @@ body.nav-on-light .home-quiet .h-top::after {
   }
 }
 
+/* E — larger navbar, subheader and blurb text */
+.home-quiet .h-top {
+  font-size: max(0.9rem, 1.1vw);
+}
+
+.home-quiet .h-eyebrow {
+  font-size: max(0.9rem, 1.15vw);
+}
+
 /* E — name size and left gap */
 .home-quiet .h-hero {
   left: 7.5vw;
@@ -1280,9 +1286,9 @@ body.nav-on-light .home-quiet .h-top::after {
 
 /* E — blurb and action row */
 .home-quiet .h-blurb {
-  max-width: 26rem;
+  max-width: 34rem;
   margin: 1.6vw 0 0;
-  font-size: max(0.85rem, 1vw);
+  font-size: max(1.05rem, 1.45vw);
   line-height: 1.55;
   color: var(--dim);
 }
@@ -1356,14 +1362,6 @@ body.nav-on-light .home-quiet .h-top::after {
 }
 
 /* E — quiet field spans the page, fading in from the right */
-.home-quiet .c-vert-right {
-  font-size: 1.2vw;
-  font-weight: 400;
-  line-height: 1.55;
-  letter-spacing: 0.05em;
-  opacity: 1;
-}
-
 .h-bg-row {
   white-space: nowrap;
   overflow: hidden;
