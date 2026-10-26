@@ -835,6 +835,17 @@ body::before {
   }
 }
 
+/* E — quiet field spans the page, fading in from the right */
+.home-quiet .h-bg:not(.h-bg-vert) {
+  width: 86vw;
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 55%, transparent 100%);
+}
+
+.home-quiet .h-bg-vert {
+  left: 91.8%;
+}
+
 @media (max-width: 860px) {
   .poster-info {
     grid-template-columns: 1fr;

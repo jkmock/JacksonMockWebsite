@@ -13,6 +13,7 @@ export default defineConfig({
         ghost: resolve(import.meta.dirname, 'ghost.html'),
         collage: resolve(import.meta.dirname, 'collage.html'),
         home: resolve(import.meta.dirname, 'home.html'),
+        quiet: resolve(import.meta.dirname, 'quiet.html'),
       },
     },
   },
