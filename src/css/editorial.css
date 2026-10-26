@@ -836,9 +836,13 @@ body::before {
 }
 
 /* E — quiet field spans the page, fading in from the right */
+.h-bg-row {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .home-quiet .h-bg {
   width: 90vw;
-  text-align: justify;
   -webkit-mask-image: linear-gradient(to left, #000 55%, transparent 100%);
   mask-image: linear-gradient(to left, #000 55%, transparent 100%);
 }
