@@ -838,6 +838,12 @@ body::before {
 /* E — side bars share the quiet background text color */
 .home-quiet {
   --quiet-text: color-mix(in srgb, var(--fg) 11%, transparent);
+  --nav-fs: max(0.9rem, 1.1vw);
+  --quiet-fs: max(0.6rem, 0.72vw);
+  /* Starts the background text so the gap below the nav text equals the gap
+     above it. Derived from Space Mono metrics (ascent 1.12, descent 0.36,
+     cap height 0.70) with line heights of 1.55 (nav) and 1.9 (background). */
+  --quiet-top: calc(2 * var(--pad) + 1.61 * var(--nav-fs) - 0.63 * var(--quiet-fs));
 }
 
 .home-quiet .h-bg {
@@ -851,8 +857,9 @@ html:has(.home-quiet) {
 
 .home-quiet .h-bg {
   position: fixed;
-  top: 8.5%;
-  height: 86.5%;
+  top: var(--quiet-top);
+  height: calc(95% - var(--quiet-top));
+  font-size: var(--quiet-fs);
 }
 
 .home-quiet .h-top {
@@ -1268,7 +1275,7 @@ body.nav-on-light .home-quiet .h-top::after {
 
 /* E — larger navbar, subheader and blurb text */
 .home-quiet .h-top {
-  font-size: max(0.9rem, 1.1vw);
+  font-size: var(--nav-fs);
 }
 
 .home-quiet .h-eyebrow {
