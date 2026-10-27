@@ -8,10 +8,7 @@ const PHRASES = [
   'NC State',
   'Go Pack',
   'Portfolio 2026',
-  'Software Engineering',
-  'Systems',
-  'Web',
-  '3D',
+  'Software Engineering'
 ];
 
 function randomLine() {
@@ -44,7 +41,14 @@ window.addEventListener('resize', () => {
 });
 
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  gsap.from('[data-in]', {
+  let intro = [...document.querySelectorAll('[data-in]')];
+  // Mobile reorders the hero (photo first), so animate in on-screen order there.
+  if (window.matchMedia('(max-width: 860px)').matches) {
+    intro = intro
+      .filter((el) => el.getClientRects().length)
+      .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+  }
+  gsap.from(intro, {
     opacity: 0,
     y: 28,
     duration: 1,
@@ -55,17 +59,19 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 }
 
 const navBar = document.querySelector('.home-quiet .h-top');
-const lightSections = [...document.querySelectorAll('.light, .edu')];
+const lightSections = [...document.querySelectorAll('.light, .edu, .contact')];
+const contactSection = document.querySelector('.contact');
 
 if (navBar && lightSections.length) {
   const updateNavTheme = () => {
     const navBox = navBar.getBoundingClientRect();
     const navMid = navBox.top + navBox.height / 2;
-    const onLight = lightSections.some((section) => {
+    const under = (section) => {
       const box = section.getBoundingClientRect();
       return box.top <= navMid && box.bottom > navMid;
-    });
-    document.body.classList.toggle('nav-on-light', onLight);
+    };
+    document.body.classList.toggle('nav-on-light', lightSections.some(under));
+    document.body.classList.toggle('nav-on-contact', !!contactSection && under(contactSection));
   };
   window.addEventListener('scroll', updateNavTheme, { passive: true });
   window.addEventListener('resize', updateNavTheme);
@@ -209,3 +215,7 @@ if (navToggle && navBar) {
     if (event.key === 'Escape') setMenu(false);
   });
 }
+
+// iOS Safari only applies :active styles (the press flash on buttons) once the
+// page listens for touches.
+document.addEventListener('touchstart', () => {}, { passive: true });

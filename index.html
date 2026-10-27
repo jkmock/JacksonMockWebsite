@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#24160d" />
     <title>Jackson Mock</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,7 +16,7 @@
     />
     <link rel="stylesheet" href="/src/css/style.css" />
   </head>
-  <body class="theme-brown">
+  <body>
     <main class="quiet-page">
     <section class="home home-quiet">
       <div class="h-top mono" data-in>
@@ -26,7 +29,7 @@
           <a href="#work">Projects</a>
           <a href="#experience">Experience</a>
           <a href="#education">Education</a>
-          <a href="#">Contact</a>
+          <a href="#contact">Contact</a>
         </nav>
       </div>
 
@@ -37,10 +40,10 @@
         <p class="h-eyebrow mono dim" data-in>Portfolio 2026</p>
         <h1 class="h-name" data-in>Jackson<br />Mock</h1>
         <p class="h-blurb" data-in>
-          Computer science graduate student at NC State. Building functional, user-focused full-stack apps.
+          Computer science graduate student at NC State. Building full-stack apps focused on user experience.
         </p>
         <div class="h-actions" data-in>
-          <a class="box-btn filled" href="#">Download Resume</a>
+          <a class="box-btn filled" href="/Jackson_Mock_Resume.pdf" download>Download Resume</a>
           <a class="box-btn icon-btn" href="https://github.com/jkmock" aria-label="GitHub">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
           </a>
@@ -244,6 +247,41 @@
             </div>
           </article>
           </div>
+        </div>
+      </section>
+
+      <section class="dark contact" id="contact">
+        <div class="contact-inner">
+          <h2 class="projects-title">Contact</h2>
+          <div class="contact-body">
+            <p class="contact-lede">Check out my projects and experience or send me an email.</p>
+            <div class="contact-grid">
+              <a class="contact-tile" href="mailto:jkmock@ncsu.edu">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></svg>
+                <span class="contact-label">Email</span>
+                <span class="contact-detail">jkmock@ncsu.edu</span>
+              </a>
+              <a class="contact-tile" href="https://www.linkedin.com/in/jackson-mock" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
+                <span class="contact-label">LinkedIn</span>
+                <span class="contact-detail">/in/jackson-mock</span>
+              </a>
+              <a class="contact-tile" href="https://github.com/jkmock" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
+                <span class="contact-label">GitHub</span>
+                <span class="contact-detail">github.com/jkmock</span>
+              </a>
+              <a class="contact-tile" href="/Jackson_Mock_Resume.pdf" download>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" /><path d="M14 3v6h6" /><path d="M12 12v6m-3-3 3 3 3-3" /></svg>
+                <span class="contact-label">Resume</span>
+                <span class="contact-detail">PDF</span>
+              </a>
+            </div>
+          </div>
+          <footer class="contact-foot mono">
+            <span>© 2026 Jackson Mock</span>
+            <span>Raleigh, NC</span>
+          </footer>
         </div>
       </section>
     </main>
