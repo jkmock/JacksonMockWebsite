@@ -207,22 +207,72 @@ if (projectsSection) {
       }
     });
   });
+}
 
-  // Mobile: fade each project up the first time it scrolls into view.
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    projectsSection.classList.add('is-revealing');
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-visible');
+// Mobile: below the hero, each block (a section title, a project, a job...)
+// fades its items up one at a time, in on-screen order, the same way the hero
+// does, as soon as the block's first item scrolls into view.
+const REVEAL_GROUPS = [
+  ['.projects-title', ':scope'],
+  ['.project', '.project-index, .project-title, .project-stack, .project-year, .project-summary > *, .project-photo'],
+  ['.job', '.job-index, .job-title, .job-org, .job-points li, .job-meta p'],
+  ['.contact-body', '.contact-lede, .contact-tile'],
+  ['.contact-foot', ':scope > span'],
+];
+
+const inScreenOrder = (els) =>
+  els
+    .filter((el) => el.getClientRects().length)
+    .map((el) => ({ el, box: el.getBoundingClientRect() }))
+    .sort((a, b) => (Math.abs(a.box.top - b.box.top) > 12 ? a.box.top - b.box.top : a.box.left - b.box.left))
+    .map(({ el }) => el);
+
+const mobile = window.matchMedia('(max-width: 860px)');
+
+if (mobile.matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const groups = new Map(); // first item -> all items, in on-screen order
+  REVEAL_GROUPS.forEach(([groupSelector, itemSelector]) => {
+    document.querySelectorAll(groupSelector).forEach((group) => {
+      const items = inScreenOrder([...group.querySelectorAll(itemSelector)]);
+      if (items.length) groups.set(items[0], items);
+    });
+  });
+
+  gsap.set([...groups.values()].flat(), { opacity: 0, y: 28 });
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      // Blocks that arrive together play back to back, top one first.
+      const items = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .flatMap((entry) => {
           revealObserver.unobserve(entry.target);
+          const group = groups.get(entry.target);
+          groups.delete(entry.target);
+          return group;
         });
-      },
-      { threshold: 0.15 },
-    );
-    projects.forEach((project) => revealObserver.observe(project));
-  }
+      if (!items.length) return;
+      gsap.to(items, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        stagger: 0.07,
+        clearProps: 'opacity,transform',
+      });
+    },
+    { rootMargin: '0px 0px -8% 0px' },
+  );
+  groups.forEach((_, first) => revealObserver.observe(first));
+
+  // Turned wide enough for the desktop layout: show whatever hasn't appeared.
+  mobile.addEventListener('change', () => {
+    if (mobile.matches) return;
+    revealObserver.disconnect();
+    gsap.set([...groups.values()].flat(), { clearProps: 'opacity,transform' });
+    groups.clear();
+  });
 }
 
 const navToggle = document.querySelector('.nav-toggle');
