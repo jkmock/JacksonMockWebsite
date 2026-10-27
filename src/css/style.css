@@ -735,6 +735,10 @@ body.nav-on-light .home-quiet .h-top::after {
   color: var(--bg);
 }
 
+.home-quiet .h-home {
+  text-decoration: none;
+}
+
 .home-quiet .h-top nav a {
   padding-bottom: 0.3rem;
   text-decoration: none;
