@@ -1026,6 +1026,9 @@ body.nav-on-light .home-quiet .h-top::after {
     /* Safari's toolbars shrink on scroll: fill the tall (lvh) screen, but lay the
        content out for the short (svh) one so nothing sits under the toolbar */
     --toolbar-gap: calc(100lvh - 100svh + var(--safe-bottom));
+    /* Same gap-matching as above, but the nav row here is the 2.75rem menu
+       button with the nav text centered in it. */
+    --quiet-top: calc(2 * var(--pad) + 2.75rem + 0.06 * var(--nav-fs) - 0.63 * var(--quiet-fs));
     height: auto;
     min-height: calc(100lvh + var(--safe-bottom));
     justify-content: center;
@@ -1097,14 +1100,14 @@ body.nav-on-light .home-quiet .h-top::after {
     padding: 0 1.4rem;
   }
 
+  /* Three lines, all centered in the button and spread out with transforms, so
+     the outer two meet exactly at the center when they turn into the X. */
   .home-quiet .nav-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.4rem;
+    display: block;
+    position: relative;
     width: 2.75rem;
     height: 2.75rem;
-    padding: 0 0.6rem;
+    padding: 0;
     border: 0;
     background: none;
     color: inherit;
@@ -1112,18 +1115,35 @@ body.nav-on-light .home-quiet .h-top::after {
   }
 
   .home-quiet .nav-toggle span {
-    display: block;
+    position: absolute;
+    top: calc(50% - 1px);
+    left: calc(50% - 12px);
+    width: 24px;
     height: 2px;
     background: currentColor;
-    transition: transform 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      opacity 0.2s ease;
+  }
+
+  .home-quiet .nav-toggle span:first-child {
+    transform: translateY(-7px);
+  }
+
+  .home-quiet .nav-toggle span:last-child {
+    transform: translateY(7px);
   }
 
   .home-quiet .h-top.is-open .nav-toggle span:first-child {
-    transform: translateY(0.3rem) rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  .home-quiet .h-top.is-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
   }
 
   .home-quiet .h-top.is-open .nav-toggle span:last-child {
-    transform: translateY(-0.3rem) rotate(-45deg);
+    transform: rotate(-45deg);
   }
 
   .home-quiet .h-top nav {
