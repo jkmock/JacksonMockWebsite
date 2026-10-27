@@ -1,5 +1,0 @@
-{
-  "redirects": [
-    { "source": "/", "destination": "/globe.html", "permanent": false }
-  ]
-}

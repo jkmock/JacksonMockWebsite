@@ -1,20 +1,16 @@
 # Jackson Mock — Website
 
-Personal site: 3D renders, resume, and whatever else. Plain HTML/CSS/JS on Vite, with Three.js for 3D.
+Personal portfolio: a single page with a hero, projects, experience and education. Plain HTML/CSS/JS on Vite, with GSAP for the intro animation.
 
 ## Structure
 
 ```
-index.html          Home page (Three.js hero scene)
-resume.html          Resume page
-src/css/style.css    Shared styles
-src/js/main.js        Home page entry script
-src/js/three/scene.js Three.js scene setup
-public/models/        3D model files (.glb, .gltf, etc.) served as-is
-public/images/         Static images served as-is
+index.html              The whole site
+src/css/style.css       Styles
+src/js/main.js          Background text, nav, project scroll and reveal, intro animation
+public/favicon.svg      Favicon
+public/images/          Portrait and project images, served as-is
 ```
-
-Add a new page by creating `<name>.html` at the root and registering it in `vite.config.js` under `build.rollupOptions.input`.
 
 ## Develop
 
