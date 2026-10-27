@@ -1,5 +1,11 @@
 import gsap from 'gsap';
 
+// "Portfolio 2026", "© 2026" etc. always show the current year.
+const YEAR = new Date().getFullYear();
+document.querySelectorAll('[data-year]').forEach((el) => {
+  el.textContent = YEAR;
+});
+
 const PHRASES = [
   'North Carolina State University',
   'Computer Science',
@@ -7,7 +13,7 @@ const PHRASES = [
   'Raleigh, NC',
   'NC State',
   'Go Pack',
-  'Portfolio 2026',
+  `Portfolio ${YEAR}`,
   'Software Engineering'
 ];
 
