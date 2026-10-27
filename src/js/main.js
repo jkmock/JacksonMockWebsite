@@ -39,14 +39,32 @@ function buildRandomRows(el) {
 }
 
 const randomFields = document.querySelectorAll('[data-random]');
-randomFields.forEach(buildRandomRows);
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => randomFields.forEach(buildRandomRows), 150);
 });
 
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+// Wait for the web fonts and portrait (capped, so a slow network still gets a
+// page) so the background text doesn't render in a fallback font and reflow.
+const portrait = document.querySelector('.h-photo img');
+await Promise.race([
+  Promise.all([
+    document.fonts.load('1em "Space Mono"'),
+    document.fonts.load('600 1em "Inter Tight"'),
+    portrait?.decode().catch(() => {}),
+  ]).then(() => document.fonts.ready),
+  new Promise((resolve) => setTimeout(resolve, 2500)),
+]);
+randomFields.forEach(buildRandomRows);
+
+function reveal() {
+  requestAnimationFrame(() => document.documentElement.classList.remove('is-loading'));
+}
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  reveal();
+} else {
   let intro = [...document.querySelectorAll('[data-in]')];
   // Mobile reorders the hero (photo first), so animate in on-screen order there.
   if (window.matchMedia('(max-width: 860px)').matches) {
@@ -62,6 +80,7 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     stagger: 0.07,
     delay: 0.1,
   });
+  reveal();
 }
 
 const navBar = document.querySelector('.home-quiet .h-top');

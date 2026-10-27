@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#2d2017" />
     <title>Jackson Mock</title>
+    <script>
+      // Hide the page until main.js has its fonts and background text ready.
+      // The timeout is a safety net in case main.js never runs.
+      document.documentElement.classList.add('is-loading');
+      setTimeout(() => document.documentElement.classList.remove('is-loading'), 4000);
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

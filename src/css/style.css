@@ -38,6 +38,15 @@ a {
   color: inherit;
 }
 
+/* held back until fonts and the background text are ready (see main.js) */
+.quiet-page {
+  transition: opacity 0.35s ease;
+}
+
+.is-loading .quiet-page {
+  opacity: 0;
+}
+
 p {
   margin: 0;
 }
@@ -1055,12 +1064,26 @@ body.nav-on-light .home-quiet .h-top::after {
     height: calc(100% + var(--pad) + var(--safe-top) + 2.2rem);
   }
 
+  /* Safari clips fixed layers above its bottom toolbar, leaving a bare strip
+     there. On phones the grain and background text scroll with the page
+     instead, so they run all the way down to the next section. */
+  body {
+    position: relative;
+  }
+
+  body::before {
+    position: absolute;
+    inset: 0;
+  }
+
   .home-quiet .h-bg {
     display: block;
+    position: absolute;
     top: calc(var(--quiet-top) + var(--safe-top));
+    bottom: 0;
     left: 0;
     width: 100vw;
-    height: calc(100lvh + var(--safe-bottom) - var(--quiet-top) - var(--safe-top) + 15vh);
+    height: auto;
   }
 
   .home-quiet .h-hero {
