@@ -306,12 +306,8 @@ html:has(.home-quiet) {
 
 /* Phones: a solid strip fixed to the top edge. iOS Safari tints its status bar
    area from a fixed element there; without one it shows dark brown at the top
-   and turns see-through once you scroll. It follows the section under the nav.
-   .toolbar-tint does the same at the bottom edge for Safari's toolbar, following
-   the section at the bottom of the screen. Both use the -seen colors so the
-   bars match the page as it looks under the grain. */
-.status-tint,
-.toolbar-tint {
+   and turns see-through once you scroll. It follows the section under the nav. */
+.status-tint {
   display: none;
 }
 
@@ -334,27 +330,6 @@ html:has(.home-quiet) {
   }
 
   body.nav-on-contact .status-tint {
-    background: var(--bg-contact-seen);
-  }
-
-  .toolbar-tint {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 21;
-    height: max(var(--safe-bottom), 1px);
-    background: var(--bg-dark-seen);
-    pointer-events: none;
-    transition: background-color 0.3s ease;
-  }
-
-  body.bar-on-light .toolbar-tint {
-    background: var(--bg-light-seen);
-  }
-
-  body.bar-on-contact .toolbar-tint {
     background: var(--bg-contact-seen);
   }
 }

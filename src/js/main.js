@@ -120,16 +120,12 @@ if (navBar && lightSections.length) {
   const updateNavTheme = () => {
     const navBox = navBar.getBoundingClientRect();
     const navMid = navBox.top + navBox.height / 2;
-    const under = (y) => (section) => {
+    const under = (section) => {
       const box = section.getBoundingClientRect();
-      return box.top <= y && box.bottom > y;
+      return box.top <= navMid && box.bottom > navMid;
     };
-    document.body.classList.toggle('nav-on-light', lightSections.some(under(navMid)));
-    document.body.classList.toggle('nav-on-contact', !!contactSection && under(navMid)(contactSection));
-    // and the same for the bottom edge, for Safari's toolbar (.toolbar-tint)
-    const bottom = window.innerHeight - 1;
-    document.body.classList.toggle('bar-on-light', lightSections.some(under(bottom)));
-    document.body.classList.toggle('bar-on-contact', !!contactSection && under(bottom)(contactSection));
+    document.body.classList.toggle('nav-on-light', lightSections.some(under));
+    document.body.classList.toggle('nav-on-contact', !!contactSection && under(contactSection));
   };
   window.addEventListener('scroll', updateNavTheme, { passive: true });
   window.addEventListener('resize', updateNavTheme);
