@@ -73,8 +73,10 @@
             type="matrix"
             values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"
           />
-          <!-- shadows to --duo-shadow, highlights to --duo-highlight; main.js
-               fills these in from the CSS, the values here are the fallback -->
+          <!-- Duotone: shadows to #072029, highlights to #ffffff. Each line is one
+               channel (red, green, blue): "shadow highlight", as 0-1 (hex / 255).
+               Set here rather than from JS: Safari renders the photo black when
+               a script changes a filter that CSS is already using. -->
           <feComponentTransfer>
             <feFuncR type="table" tableValues="0.027 1.000" />
             <feFuncG type="table" tableValues="0.125 1.000" />

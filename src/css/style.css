@@ -2,7 +2,7 @@
      backgrounds: --bg-dark, --bg-light, --bg-contact
      text:        --text-light (on bg-dark), --text-dark (on bg-light and bg-contact)
      accents:     --accent (on bg-dark), --accent-dark (on bg-light and bg-contact)
-     portrait:    --duo-shadow / --duo-highlight (the photo's duotone)
+     portrait:    the photo's duotone colors are in the #duotone filter in index.html
    Notes: 06222cbright 18fbff FF4747cobalt, E3264Fcream, butter yellow f54a4a */
 
 :root {
@@ -13,10 +13,6 @@
   --text-dark: #06222c;    /* text on bg-light and bg-contact */
   --accent: #18fbff;       /* accent on bg-dark */
   --accent-dark: #169294;  /* accent on bg-light and bg-contact */
-  /* duotone portrait: shadows map to the first, highlights to the second
-     (main.js copies these into the #duotone SVG filter) */
-  --duo-shadow: #072029;
-  --duo-highlight: #ffffff;
 }
 
 :root {

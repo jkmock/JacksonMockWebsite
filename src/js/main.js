@@ -16,16 +16,6 @@ function toRgb(color) {
 
 const rootStyle = getComputedStyle(document.documentElement);
 
-// The duotone portrait filter is SVG, which can't read CSS variables, so copy
-// --duo-shadow / --duo-highlight into its color tables.
-const duoShadow = toRgb(rootStyle.getPropertyValue('--duo-shadow'));
-const duoHighlight = toRgb(rootStyle.getPropertyValue('--duo-highlight'));
-['R', 'G', 'B'].forEach((ch, i) => {
-  document
-    .querySelector(`#duotone feFunc${ch}`)
-    ?.setAttribute('tableValues', `${duoShadow[i].toFixed(3)} ${duoHighlight[i].toFixed(3)}`);
-});
-
 // Keep Safari's status bar color in step with --bg-dark-seen (--bg-dark
 // lightened 4.2% toward white), so editing --bg-dark is enough.
 const barColor = toRgb(rootStyle.getPropertyValue('--bg-dark')).map((c) =>
