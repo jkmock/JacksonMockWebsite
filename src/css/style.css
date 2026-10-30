@@ -1,20 +1,49 @@
+/* Colors. Edit any of these freely.
+     backgrounds: --bg-dark, --bg-light, --bg-contact
+     text:        --text-light (on bg-dark), --text-dark (on bg-light and bg-contact)
+     accents:     --accent (on bg-dark), --accent-dark (on bg-light and bg-contact)
+     portrait:    --duo-shadow / --duo-highlight (the photo's duotone)
+   Notes: 06222cbright 18fbff FF4747cobalt, E3264Fcream, butter yellow f54a4a */
+
 :root {
+  --bg-dark: #051e27;      /* hero, Experience */
+  --bg-light: #ffffff;     /* Projects, Education */
+  --bg-contact: #c3e5e8;   /* Contact */
+  --text-light: #ffffff;   /* text on bg-dark */
+  --text-dark: #06222c;    /* text on bg-light and bg-contact */
+  --accent: #18fbff;       /* accent on bg-dark */
+  --accent-dark: #169294;  /* accent on bg-light and bg-contact */
+  /* duotone portrait: shadows map to the first, highlights to the second
+     (main.js copies these into the #duotone SVG filter) */
+  --duo-shadow: #072029;
+  --duo-highlight: #ffffff;
+}
+
+:root {
+  /* text on accent-filled buttons */
+  --on-accent: var(--bg-dark);
+  /* highlighted text. Set here so it stays --accent in the light sections,
+     which swap --accent for --accent-dark */
+  --selection: var(--accent);
+  /* the corner marks around the hero photo */
+  --photo-bracket: var(--accent);
+  /* the current section's background and text. Dark sections use these as
+     is; the light and contact sections point them at their own colors. */
+  --bg: var(--bg-dark);
+  --fg: var(--text-light);
+  --dim: color-mix(in srgb, var(--fg) 55%, transparent);
+  --ghost: color-mix(in srgb, var(--fg) 6%, transparent);
+  --line: color-mix(in srgb, var(--fg) 35%, transparent);
+  /* the backgrounds as they look under the grain overlay, for the areas
+     Safari paints itself (status bar and toolbar tints), which get no grain */
+  --bg-dark-seen: color-mix(in srgb, var(--bg-dark), #fff 4.2%);
+  --bg-light-seen: color-mix(in srgb, var(--bg-light), #fff 4.2%);
+  --bg-contact-seen: color-mix(in srgb, var(--bg-contact), #fff 4.2%);
   --pad: clamp(1rem, 1.8vw, 2rem);
-  --bg: #24160d;
-  --fg: #ead9bd;
-  --dim: rgba(234, 217, 189, 0.55);
-  --ghost: rgba(234, 217, 189, 0.06);
-  --line: rgba(234, 217, 189, 0.35);
-  --accent: #c98d52;
   --grain: 0.14;
   /* notch / status bar height on phones (viewport-fit=cover), 0 elsewhere */
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  /* the colors as they look under the grain overlay, for the areas Safari
-     paints itself (status bar and toolbar tints), which get no grain */
-  --bg-seen: #2d2017;
-  --fg-seen: #ebdbc0;
-  --tan-seen: #c6ac87;
 }
 
 * {
@@ -22,7 +51,7 @@
 }
 
 html {
-  background: var(--bg-seen);
+  background: var(--bg-dark-seen);
 }
 
 body {
@@ -277,8 +306,12 @@ html:has(.home-quiet) {
 
 /* Phones: a solid strip fixed to the top edge. iOS Safari tints its status bar
    area from a fixed element there; without one it shows dark brown at the top
-   and turns see-through once you scroll. It follows the section under the nav. */
-.status-tint {
+   and turns see-through once you scroll. It follows the section under the nav.
+   .toolbar-tint does the same at the bottom edge for Safari's toolbar, following
+   the section at the bottom of the screen. Both use the -seen colors so the
+   bars match the page as it looks under the grain. */
+.status-tint,
+.toolbar-tint {
   display: none;
 }
 
@@ -291,33 +324,54 @@ html:has(.home-quiet) {
     right: 0;
     z-index: 21;
     height: max(var(--safe-top), 1px);
-    background: var(--bg-seen);
+    background: var(--bg-dark-seen);
     pointer-events: none;
     transition: background-color 0.3s ease;
   }
 
   body.nav-on-light .status-tint {
-    background: var(--fg-seen);
+    background: var(--bg-light-seen);
   }
 
   body.nav-on-contact .status-tint {
-    background: var(--tan-seen);
+    background: var(--bg-contact-seen);
+  }
+
+  .toolbar-tint {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 21;
+    height: max(var(--safe-bottom), 1px);
+    background: var(--bg-dark-seen);
+    pointer-events: none;
+    transition: background-color 0.3s ease;
+  }
+
+  body.bar-on-light .toolbar-tint {
+    background: var(--bg-light-seen);
+  }
+
+  body.bar-on-contact .toolbar-tint {
+    background: var(--bg-contact-seen);
   }
 }
 
 /* over the tan Contact section the nav (dark text) fades from tan instead */
 body.nav-on-contact .home-quiet .h-top::after {
-  background: linear-gradient(color-mix(in srgb, #c4a882 94%, transparent), transparent);
+  background: linear-gradient(color-mix(in srgb, var(--bg-contact) 94%, transparent), transparent);
 }
 
 .home-quiet .h-top::after {
-  background: linear-gradient(color-mix(in srgb, var(--fg) 94%, transparent), transparent);
+  background: linear-gradient(color-mix(in srgb, var(--bg-light) 94%, transparent), transparent);
   opacity: 0;
 }
 
 body.nav-on-light .home-quiet .h-top {
-  --accent: #8a4f22;
-  color: var(--bg);
+  --accent: var(--accent-dark);
+  color: var(--text-dark);
 }
 
 body.nav-on-light .home-quiet .h-top::before {
@@ -329,13 +383,15 @@ body.nav-on-light .home-quiet .h-top::after {
 }
 
 .light {
+  --bg: var(--bg-light);
+  --fg: var(--text-dark);
   --n: 4;
   --step: 40vh;
   position: relative;
   z-index: 3;
   height: calc(100svh + (var(--n) - 1) * var(--step));
-  background: var(--fg);
-  color: var(--bg);
+  background: var(--bg);
+  color: var(--fg);
 }
 
 .light-inner {
@@ -367,11 +423,11 @@ body.nav-on-light .home-quiet .h-top::after {
 }
 
 .project {
-  border-top: 1px solid color-mix(in srgb, var(--bg) 30%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--fg) 30%, transparent);
 }
 
 .project:last-child {
-  border-bottom: 1px solid color-mix(in srgb, var(--bg) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--fg) 30%, transparent);
 }
 
 .project-head {
@@ -383,7 +439,7 @@ body.nav-on-light .home-quiet .h-top::after {
   padding: min(1.4vh, 0.8rem) 0;
   border: 0;
   background: none;
-  color: var(--bg);
+  color: var(--fg);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -394,13 +450,13 @@ body.nav-on-light .home-quiet .h-top::after {
 }
 
 .project-head:focus-visible .project-title {
-  color: #8a4f22;
+  color: var(--accent-dark);
 }
 
 /* hover styles only where a real pointer can hover, so taps don't stick */
 @media (hover: hover) {
   .project-title:hover {
-    color: #8a4f22;
+    color: var(--accent-dark);
   }
 }
 
@@ -414,13 +470,17 @@ body.nav-on-light .home-quiet .h-top::after {
   transition: color 0.6s ease;
 }
 
-.project-index,
 .project-stack {
-  color: color-mix(in srgb, var(--bg) 60%, transparent);
+  color: color-mix(in srgb, var(--fg) 60%, transparent);
+}
+
+.project-index,
+.project-year {
+  color: var(--accent-dark);
 }
 
 .project-index {
-  font-size: max(0.95rem, 1.15vw);
+  font-size: max(1.15rem, 1.4vw);
 }
 
 .project-stack,
@@ -475,29 +535,29 @@ body.nav-on-light .home-quiet .h-top::after {
   display: inline-flex;
   align-items: center;
   padding: 0.7rem 1.3rem;
-  border: 2px solid var(--bg);
-  color: var(--bg);
+  border: 2px solid var(--fg);
+  color: var(--fg);
   letter-spacing: 0.14em;
   text-decoration: none;
   transition: background 0.25s ease, color 0.25s ease;
 }
 
 .project-btn:focus-visible {
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
   outline: none;
 }
 
 /* hover styles only where a real pointer can hover, so taps don't stick */
 @media (hover: hover) {
   .project-btn:hover {
-    background: var(--bg);
-    color: var(--fg);
+    background: var(--fg);
+    color: var(--bg);
   }
 }
 
 .project-summary p {
-  font-size: max(0.9rem, 1.05vw);
+  font-size: max(1rem, 1.2vw);
   line-height: 1.5;
 }
 
@@ -505,15 +565,15 @@ body.nav-on-light .home-quiet .h-top::after {
   grid-column: 3;
   height: min(30vh, 17rem);
   aspect-ratio: 16 / 9;
-  border: 1px solid color-mix(in srgb, var(--bg) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fg) 25%, transparent);
   background:
     var(--photo, none) center / cover no-repeat,
     repeating-linear-gradient(
       135deg,
-      color-mix(in srgb, var(--bg) 7%, transparent) 0 10px,
+      color-mix(in srgb, var(--fg) 7%, transparent) 0 10px,
       transparent 10px 20px
     ),
-    color-mix(in srgb, var(--bg) 6%, var(--fg));
+    color-mix(in srgb, var(--fg) 6%, var(--bg));
 }
 
 @media (max-width: 860px) {
@@ -546,8 +606,15 @@ body.nav-on-light .home-quiet .h-top::after {
     display: none;
   }
 
+  /* one gap for the whole project: line → title → photo → text, and
+     button → next line */
+  .project {
+    --project-gap: 1.5rem;
+  }
+
   .project-head {
     grid-template-columns: 1fr auto;
+    padding: var(--project-gap) 0 0;
     /* every project is already open on mobile, so the row is just a heading */
     pointer-events: none;
     cursor: default;
@@ -561,6 +628,8 @@ body.nav-on-light .home-quiet .h-top::after {
 
   .project-detail {
     opacity: 1;
+    gap: var(--project-gap);
+    padding: var(--project-gap) 0;
   }
 
   .project-title {
@@ -622,7 +691,7 @@ body.nav-on-light .home-quiet .h-top::after {
 }
 
 .job-index {
-  font-size: max(0.95rem, 1.15vw);
+  font-size: max(1.15rem, 1.4vw);
   color: color-mix(in srgb, var(--fg) 60%, transparent);
 }
 
@@ -637,7 +706,7 @@ body.nav-on-light .home-quiet .h-top::after {
 
 .job-org {
   margin: 0.8rem 0 1.4rem;
-  font-size: max(0.85rem, 1vw);
+  font-size: max(1.1rem, 1.35vw);
   color: var(--accent);
 }
 
@@ -654,7 +723,7 @@ body.nav-on-light .home-quiet .h-top::after {
 .job-points li {
   position: relative;
   padding-left: 1.6rem;
-  font-size: max(0.9rem, 1.05vw);
+  font-size: max(1rem, 1.2vw);
   line-height: 1.5;
   color: color-mix(in srgb, var(--fg) 86%, transparent);
 }
@@ -667,7 +736,7 @@ body.nav-on-light .home-quiet .h-top::after {
 }
 
 .job-meta {
-  font-size: max(0.85rem, 1vw);
+  font-size: max(1rem, 1.2vw);
   text-align: right;
   white-space: nowrap;
 }
@@ -679,16 +748,14 @@ body.nav-on-light .home-quiet .h-top::after {
 /* Education: the experience layout on beige, with the page colors flipped */
 
 .edu {
-  --ink: var(--bg);
-  --paper: var(--fg);
   position: relative;
   z-index: 3;
 }
 
 .edu-inner {
-  --fg: var(--ink);
-  --bg: var(--paper);
-  --accent: #8a4f22;
+  --bg: var(--bg-light);
+  --fg: var(--text-dark);
+  --accent: var(--accent-dark);
   padding: 14vh 7.5vw 14vh;
   background: var(--bg);
   color: var(--fg);
@@ -698,15 +765,13 @@ body.nav-on-light .home-quiet .h-top::after {
    link can bring it to the top, with the footer pinned to the bottom */
 /* tan, with the page colors flipped like Education (dark text) */
 .contact {
-  --ink: var(--bg);
-  --paper: var(--fg);
-  background: #c4a882;
+  background: var(--bg-contact);
 }
 
 .contact-inner {
-  --fg: var(--ink);
-  --bg: var(--paper);
-  --accent: #8a4f22;
+  --bg: var(--bg-contact);
+  --fg: var(--text-dark);
+  --accent: var(--accent-dark);
   --rule: color-mix(in srgb, var(--fg) 35%, transparent);
   color: var(--fg);
   display: flex;
@@ -762,7 +827,7 @@ body.nav-on-light .home-quiet .h-top::after {
   justify-content: flex-end;
   gap: 0.45rem;
   padding: 1.3rem;
-  background: #c4a882;
+  background: var(--bg);
   text-align: left;
   container-type: inline-size;
   color: var(--fg);
@@ -803,14 +868,14 @@ body.nav-on-light .home-quiet .h-top::after {
 
 .contact-tile:focus-visible {
   background: var(--fg);
-  color: #c4a882;
+  color: var(--bg);
   outline: none;
 }
 
 @media (hover: hover) {
   .contact-tile:hover {
     background: var(--fg);
-    color: #c4a882;
+    color: var(--bg);
   }
 
 }
@@ -899,7 +964,8 @@ body.nav-on-light .home-quiet .h-top::after {
 /* blurb and action row */
 
 .home-quiet .h-blurb {
-  max-width: 34rem;
+  /* never past 40% of the screen width: the hero starts 7.5vw in */
+  max-width: min(36rem, 40vw - 7.5vw);
   margin: 1.6vw 0 0;
   font-size: max(1.05rem, 1.45vw);
   line-height: 1.55;
@@ -943,8 +1009,8 @@ body.nav-on-light .home-quiet .h-top::after {
 /* accent color touches */
 
 .quiet-page ::selection {
-  background: var(--accent);
-  color: var(--bg);
+  background: var(--selection);
+  color: var(--on-accent);
 }
 
 .home-quiet .h-home {
@@ -983,13 +1049,13 @@ body.nav-on-light .home-quiet .h-top::after {
 @media (hover: hover) {
   .home-quiet .box-btn:hover {
     background: var(--accent);
-    color: var(--bg);
+    color: var(--on-accent);
   }
 }
 
 .home-quiet .box-btn.filled {
   background: var(--accent);
-  color: var(--bg);
+  color: var(--on-accent);
 }
 
 /* hover styles only where a real pointer can hover, so taps don't stick */
@@ -1032,7 +1098,7 @@ body.nav-on-light .home-quiet .h-top::after {
     height: auto;
     min-height: calc(100lvh + var(--safe-bottom));
     justify-content: center;
-    padding: calc(6.25rem + var(--safe-top)) 1.25rem calc(2.5rem + var(--toolbar-gap));
+    padding: calc(5.75rem + var(--safe-top)) 1.25rem calc(2.5rem + var(--toolbar-gap));
   }
 
   .home-quiet .h-top {
@@ -1042,6 +1108,11 @@ body.nav-on-light .home-quiet .h-top::after {
     right: 1.25rem;
     flex-direction: row;
     align-items: center;
+  }
+
+  .home-quiet .h-home {
+    padding-left: 0.35rem;
+    font-size: 1.05rem;
   }
 
   .home-quiet .h-top::before,
@@ -1084,16 +1155,18 @@ body.nav-on-light .home-quiet .h-top::after {
 
   .home-quiet .h-name {
     font-size: 18vw;
+    line-height: 0.86;
   }
 
   .home-quiet .h-blurb {
-    margin-top: 0.75rem;
+    max-width: 34rem;
+    margin-top: 0.45rem;
   }
 
   .home-quiet .h-actions {
     --btn-h: 3rem;
     gap: 0.6rem;
-    margin-top: 1.1rem;
+    margin-top: 0.8rem;
   }
 
   .home-quiet .box-btn.filled {
@@ -1146,33 +1219,75 @@ body.nav-on-light .home-quiet .h-top::after {
     transform: rotate(-45deg);
   }
 
+  /* Menu: a full-width panel that unrolls down from under the nav bar, its
+     links then fading up one after another like the section reveals
+     (power3.out). The bar is inset 1.25rem, so the panel reaches past it. */
   .home-quiet .h-top nav {
+    --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
     position: absolute;
     top: calc(100% + 0.75rem);
-    right: 0;
+    left: -1.25rem;
+    right: -1.25rem;
     flex-direction: column;
-    gap: 1.1rem;
-    min-width: 12rem;
-    padding: 1.4rem 1.6rem;
-    border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+    gap: 1.25rem;
+    /* links line up with the name above; the bottom is 0.3rem less than the
+       top because each link already has 0.3rem under it for the underline */
+    padding: 1.6rem 1.25rem 1.3rem 1.6rem;
+    font-size: 1.1rem;
+    border-block: 1px solid color-mix(in srgb, currentColor 25%, transparent);
     background: var(--bg);
-    opacity: 0;
     visibility: hidden;
-    transform: translateY(-0.5rem);
+    clip-path: inset(0 0 100% 0);
+    transition:
+      clip-path 0.45s var(--ease-out),
+      visibility 0s 0.45s;
+  }
+
+  .home-quiet .h-top nav a {
+    opacity: 0;
+    transform: translateY(0.9rem);
     transition:
       opacity 0.25s ease,
       transform 0.25s ease,
-      visibility 0.25s;
+      background-size 0.35s cubic-bezier(0.65, 0, 0.35, 1);
   }
 
   body.nav-on-light .home-quiet .h-top nav {
-    background: var(--fg);
+    background: var(--bg-light);
+  }
+
+  body.nav-on-contact .home-quiet .h-top nav {
+    background: var(--bg-contact);
   }
 
   .home-quiet .h-top.is-open nav {
-    opacity: 1;
     visibility: visible;
+    clip-path: inset(0 0 -1px 0);
+    transition:
+      clip-path 0.6s var(--ease-out),
+      visibility 0s;
+  }
+
+  .home-quiet .h-top.is-open nav a {
+    opacity: 1;
     transform: none;
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.8s var(--ease-out),
+      background-size 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  .home-quiet .h-top.is-open nav a:nth-child(1) { transition-delay: 0.12s; }
+  .home-quiet .h-top.is-open nav a:nth-child(2) { transition-delay: 0.19s; }
+  .home-quiet .h-top.is-open nav a:nth-child(3) { transition-delay: 0.26s; }
+  .home-quiet .h-top.is-open nav a:nth-child(4) { transition-delay: 0.33s; }
+}
+
+@media (max-width: 860px) and (prefers-reduced-motion: reduce) {
+  .home-quiet .h-top nav,
+  .home-quiet .h-top nav a {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
   }
 }
 
@@ -1187,8 +1302,28 @@ body.nav-on-light .home-quiet .h-top::after {
   height: min(70vh, 46vw);
   aspect-ratio: 2 / 3;
   margin: auto 0;
-  outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
-  outline-offset: 0.8rem;
+  --bracket-gap: 0.8rem;
+  --bracket-size: 2rem;
+}
+
+/* viewfinder-style corner marks just outside the photo */
+.home-quiet .h-photo::before {
+  --c: linear-gradient(var(--photo-bracket), var(--photo-bracket));
+  --w: 2px;
+  content: '';
+  position: absolute;
+  inset: calc(var(--bracket-gap) * -1);
+  pointer-events: none;
+  background:
+    var(--c) top left / var(--bracket-size) var(--w),
+    var(--c) top left / var(--w) var(--bracket-size),
+    var(--c) top right / var(--bracket-size) var(--w),
+    var(--c) top right / var(--w) var(--bracket-size),
+    var(--c) bottom left / var(--bracket-size) var(--w),
+    var(--c) bottom left / var(--w) var(--bracket-size),
+    var(--c) bottom right / var(--bracket-size) var(--w),
+    var(--c) bottom right / var(--w) var(--bracket-size);
+  background-repeat: no-repeat;
 }
 
 .home-quiet .h-photo img {
@@ -1222,7 +1357,8 @@ body.nav-on-light .home-quiet .h-top::after {
     right: auto;
     height: min(38svh, 24rem);
     margin: 0 0 1.4rem;
-    outline-offset: 0.5rem;
+    --bracket-gap: 0.5rem;
+    --bracket-size: 1.4rem;
   }
 }
 
@@ -1237,16 +1373,15 @@ body.nav-on-light .home-quiet .h-top::after {
   .home-quiet .h-photo {
     height: 33svh;
     margin-bottom: 1rem;
-    outline-offset: 0.4rem;
   }
 
   .home-quiet .h-blurb {
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
     line-height: 1.45;
   }
 
   .home-quiet .h-actions {
-    margin-top: 0.8rem;
+    margin-top: 0.7rem;
   }
 }
 
@@ -1260,7 +1395,7 @@ body.nav-on-light .home-quiet .h-top::after {
 
   .home-quiet .box-btn:active {
     background: var(--accent);
-    color: var(--bg);
+    color: var(--on-accent);
     transition-duration: 0s;
   }
 
@@ -1270,14 +1405,14 @@ body.nav-on-light .home-quiet .h-top::after {
   }
 
   .project-btn:active {
-    background: var(--bg);
-    color: var(--fg);
+    background: var(--fg);
+    color: var(--bg);
     transition-duration: 0s;
   }
 
   .contact-tile:active {
     background: var(--fg);
-    color: #c4a882;
+    color: var(--bg);
     transition-duration: 0s;
   }
 }

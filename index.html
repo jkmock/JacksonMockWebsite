@@ -6,7 +6,8 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#2d2017" />
+    <!-- --bg-dark-seen from style.css; main.js keeps it in step if --bg-dark changes -->
+    <meta name="theme-color" content="#102730" />
     <title>Jackson Mock</title>
     <script>
       // Hide the page until main.js has its fonts and background text ready.
@@ -24,6 +25,7 @@
   </head>
   <body>
     <div class="status-tint" aria-hidden="true"></div>
+    <div class="toolbar-tint" aria-hidden="true"></div>
     <main class="quiet-page">
     <section class="home home-quiet">
       <div class="h-top mono" data-in>
@@ -52,11 +54,11 @@
         </p>
         <div class="h-actions" data-in>
           <a class="box-btn filled" href="/Jackson_Mock_Resume.pdf" target="_blank" rel="noopener" download>Download Resume</a>
-          <a class="box-btn icon-btn" href="https://github.com/jkmock" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
-          </a>
           <a class="box-btn icon-btn" href="https://www.linkedin.com/in/jackson-mock" target="_blank" rel="noopener" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
+          </a>
+          <a class="box-btn icon-btn" href="https://github.com/jkmock" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
           </a>
         </div>
       </section>
@@ -71,11 +73,12 @@
             type="matrix"
             values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"
           />
-          <!-- shadows to --bg (#24160d), highlights to --fg (#ead9bd) -->
+          <!-- shadows to --duo-shadow, highlights to --duo-highlight; main.js
+               fills these in from the CSS, the values here are the fallback -->
           <feComponentTransfer>
-            <feFuncR type="table" tableValues=".141 .918" />
-            <feFuncG type="table" tableValues=".086 .851" />
-            <feFuncB type="table" tableValues=".051 .741" />
+            <feFuncR type="table" tableValues="0.027 1.000" />
+            <feFuncG type="table" tableValues="0.125 1.000" />
+            <feFuncB type="table" tableValues="0.161 1.000" />
           </feComponentTransfer>
         </filter>
       </svg>
@@ -115,7 +118,7 @@
                 <div class="project-body-inner">
                   <div class="project-detail">
                     <div class="project-summary">
-                      <p>An interactive 3D web app that animates 22,000+ flights over 23 years as arcs from origin to destination. Flight logs are parsed for ICAO airport codes into monthly JSON datasets of coordinates, and the interface is fully responsive on mobile and desktop.</p>
+                      <p>An interactive 3D web app that animates 22,000+ flights over 23 years as arcs from origin to destination. Flight logs are parsed for ICAO airport codes into monthly JSON datasets of coordinates. A fully responsive UI allows it to be seamlessly embedded into any site.</p>
                       <a class="project-btn mono" href="https://github.com/jkmock/FlightMap#readme" target="_blank" rel="noopener">View README ↗</a>
                     </div>
                     <div class="project-photo" style="--photo: url('/images/projects/flight-map.webp')" role="img" aria-label="3D Flight Map Visualizer screenshot"></div>
@@ -127,7 +130,7 @@
               <button class="project-head" type="button" aria-expanded="false">
                 <span class="project-index mono">03</span>
                 <span class="project-title">SkySouth Website</span>
-                <span class="project-stack mono">PHP · Tailwind CSS · Schema.org · SEO</span>
+                <span class="project-stack mono">PHP · Tailwind CSS · Schema.org</span>
                 <span class="project-year mono">2026</span>
               </button>
               <div class="project-body">
@@ -230,7 +233,7 @@
               <p class="job-org mono">North Carolina State University</p>
               <ul class="job-points">
               <li>Accelerated Bachelor's/Master's Program</li>
-              <li>GPA: 3.8/4.0</li>
+              <li>GPA: 3.9/4.0</li>
               </ul>
             </div>
             <div class="job-meta mono">

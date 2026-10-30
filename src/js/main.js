@@ -6,6 +6,35 @@ document.querySelectorAll('[data-year]').forEach((el) => {
   el.textContent = YEAR;
 });
 
+// A CSS color as [r, g, b] in 0–1.
+function toRgb(color) {
+  const ctx = document.createElement('canvas').getContext('2d');
+  ctx.fillStyle = color.trim();
+  const hex = ctx.fillStyle.slice(1);
+  return [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+}
+
+const rootStyle = getComputedStyle(document.documentElement);
+
+// The duotone portrait filter is SVG, which can't read CSS variables, so copy
+// --duo-shadow / --duo-highlight into its color tables.
+const duoShadow = toRgb(rootStyle.getPropertyValue('--duo-shadow'));
+const duoHighlight = toRgb(rootStyle.getPropertyValue('--duo-highlight'));
+['R', 'G', 'B'].forEach((ch, i) => {
+  document
+    .querySelector(`#duotone feFunc${ch}`)
+    ?.setAttribute('tableValues', `${duoShadow[i].toFixed(3)} ${duoHighlight[i].toFixed(3)}`);
+});
+
+// Keep Safari's status bar color in step with --bg-dark-seen (--bg-dark
+// lightened 4.2% toward white), so editing --bg-dark is enough.
+const barColor = toRgb(rootStyle.getPropertyValue('--bg-dark')).map((c) =>
+  Math.round((c + 0.042 * (1 - c)) * 255)
+    .toString(16)
+    .padStart(2, '0')
+);
+document.querySelector('meta[name="theme-color"]')?.setAttribute('content', `#${barColor.join('')}`);
+
 const PHRASES = [
   'North Carolina State University',
   'Computer Science',
@@ -91,12 +120,16 @@ if (navBar && lightSections.length) {
   const updateNavTheme = () => {
     const navBox = navBar.getBoundingClientRect();
     const navMid = navBox.top + navBox.height / 2;
-    const under = (section) => {
+    const under = (y) => (section) => {
       const box = section.getBoundingClientRect();
-      return box.top <= navMid && box.bottom > navMid;
+      return box.top <= y && box.bottom > y;
     };
-    document.body.classList.toggle('nav-on-light', lightSections.some(under));
-    document.body.classList.toggle('nav-on-contact', !!contactSection && under(contactSection));
+    document.body.classList.toggle('nav-on-light', lightSections.some(under(navMid)));
+    document.body.classList.toggle('nav-on-contact', !!contactSection && under(navMid)(contactSection));
+    // and the same for the bottom edge, for Safari's toolbar (.toolbar-tint)
+    const bottom = window.innerHeight - 1;
+    document.body.classList.toggle('bar-on-light', lightSections.some(under(bottom)));
+    document.body.classList.toggle('bar-on-contact', !!contactSection && under(bottom)(contactSection));
   };
   window.addEventListener('scroll', updateNavTheme, { passive: true });
   window.addEventListener('resize', updateNavTheme);
@@ -278,7 +311,9 @@ if (mobile.matches && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
 const navToggle = document.querySelector('.nav-toggle');
 
 if (navToggle && navBar) {
+  let openedAt = 0;
   const setMenu = (open) => {
+    if (open) openedAt = window.scrollY;
     navBar.classList.toggle('is-open', open);
     navToggle.setAttribute('aria-expanded', String(open));
   };
@@ -289,6 +324,18 @@ if (navToggle && navBar) {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') setMenu(false);
   });
+  // A tap anywhere outside the bar or menu, or scrolling, closes it. Scrolling
+  // means a real move, not the few pixels Safari's toolbar can nudge the page.
+  document.addEventListener('click', (event) => {
+    if (!navBar.contains(event.target)) setMenu(false);
+  });
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (navBar.classList.contains('is-open') && Math.abs(window.scrollY - openedAt) > 8) setMenu(false);
+    },
+    { passive: true },
+  );
 }
 
 // iOS Safari only applies :active styles (the press flash on buttons) once the
