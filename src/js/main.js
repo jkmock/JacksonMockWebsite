@@ -235,6 +235,7 @@ const REVEAL_GROUPS = [
   ['.projects-title', ':scope'],
   ['.project', '.project-index, .project-title, .project-stack, .project-year, .project-summary > *, .project-photo'],
   ['.job', '.job-index, .job-title, .job-org, .job-points li, .job-meta p'],
+  ['.personal-body', '.personal-lede, .carousel'],
   ['.contact-body', '.contact-lede, .contact-tile'],
   ['.contact-foot', ':scope > span'],
 ];
@@ -293,6 +294,57 @@ if (mobile.matches && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
     groups.clear();
   });
 }
+
+// Personal carousel: prev/next buttons step one slide, the counter follows the
+// scroll position (so swiping works too), and videos play only while visible.
+document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+  const track = carousel.querySelector('.carousel-track');
+  const slides = [...track.children];
+  const prev = carousel.querySelector('[data-prev]');
+  const next = carousel.querySelector('[data-next]');
+  const current = carousel.querySelector('[data-current]');
+  const pad = (n) => String(n).padStart(2, '0');
+  carousel.querySelector('[data-total]').textContent = pad(slides.length);
+
+  const slideStep = () => {
+    if (slides.length < 2) return track.clientWidth;
+    return slides[1].offsetLeft - slides[0].offsetLeft;
+  };
+
+  const update = () => {
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const index = track.scrollLeft >= maxScroll - 2
+      ? slides.length - 1
+      : Math.round(track.scrollLeft / slideStep());
+    current.textContent = pad(index + 1);
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= maxScroll - 2;
+  };
+
+  prev.addEventListener('click', () => track.scrollBy({ left: -slideStep() }));
+  next.addEventListener('click', () => track.scrollBy({ left: slideStep() }));
+  track.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') prev.click();
+    if (event.key === 'ArrowRight') next.click();
+  });
+  track.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  const videos = track.querySelectorAll('video');
+  if (videos.length) {
+    const videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          if (isIntersecting) target.play().catch(() => {});
+          else target.pause();
+        });
+      },
+      { threshold: 0.5 },
+    );
+    videos.forEach((video) => videoObserver.observe(video));
+  }
+});
 
 const navToggle = document.querySelector('.nav-toggle');
 

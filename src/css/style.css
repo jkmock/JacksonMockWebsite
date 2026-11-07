@@ -732,6 +732,171 @@ body.nav-on-light .home-quiet .h-top::after {
   color: var(--fg);
 }
 
+/* Personal: dark like Experience; short intro, then a swipeable carousel */
+
+.personal-body {
+  display: flex;
+  flex-direction: column;
+  gap: min(5vh, 2.6rem);
+  padding-top: min(4vh, 2rem);
+  border-top: 1px solid color-mix(in srgb, var(--fg) 28%, transparent);
+}
+
+.personal-lede {
+  max-width: 40rem;
+  font-size: max(1.05rem, 1.45vw);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--fg) 82%, transparent);
+}
+
+.carousel {
+  --slide-w: calc((100% - 2 * 1.2rem) / 3);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.slide {
+  flex: 0 0 var(--slide-w);
+  aspect-ratio: 4 / 5;
+  scroll-snap-align: start;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--fg) 25%, transparent);
+  background: color-mix(in srgb, var(--fg) 6%, var(--bg));
+}
+
+.slide img,
+.slide video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-placeholder {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  padding: 1rem;
+  color: color-mix(in srgb, var(--fg) 45%, transparent);
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--fg) 7%, transparent) 0 10px,
+    transparent 10px 20px
+  );
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: max(0.95rem, 1.1vw);
+}
+
+.carousel-count [data-current] {
+  color: var(--accent);
+}
+
+.carousel-buttons {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.carousel-btn {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 2px solid var(--accent);
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+}
+
+.carousel-btn svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.carousel-btn:focus-visible {
+  background: var(--accent);
+  color: var(--on-accent);
+  outline: none;
+}
+
+@media (hover: hover) {
+  .carousel-btn:not(:disabled):hover {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
+@media (hover: none) {
+  .carousel-btn:not(:disabled):active {
+    background: var(--accent);
+    color: var(--on-accent);
+    transition-duration: 0s;
+  }
+}
+
+@media (max-width: 1160px) {
+  .carousel {
+    --slide-w: calc((100% - 1.2rem) / 2);
+  }
+}
+
+@media (max-width: 860px) {
+  .carousel {
+    --slide-w: 82%;
+  }
+
+  .carousel-track,
+  .carousel {
+    gap: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    scroll-behavior: auto;
+  }
+}
+
 /* Contact: last section, dark like Experience; fills the screen so the nav
    link can bring it to the top, with the footer pinned to the bottom */
 /* tan, with the page colors flipped like Education (dark text) */
@@ -1252,6 +1417,7 @@ body.nav-on-light .home-quiet .h-top::after {
   .home-quiet .h-top.is-open nav a:nth-child(2) { transition-delay: 0.19s; }
   .home-quiet .h-top.is-open nav a:nth-child(3) { transition-delay: 0.26s; }
   .home-quiet .h-top.is-open nav a:nth-child(4) { transition-delay: 0.33s; }
+  .home-quiet .h-top.is-open nav a:nth-child(5) { transition-delay: 0.4s; }
 }
 
 @media (max-width: 860px) and (prefers-reduced-motion: reduce) {
