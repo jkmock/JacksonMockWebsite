@@ -44,6 +44,10 @@
 
 * {
   box-sizing: border-box;
+  /* no double-tap zoom (fast taps on the carousel arrows kept zooming in);
+     pinch-zoom still works. Set on every element because scroll areas like
+     the carousel track don't take it from the page. */
+  touch-action: manipulation;
 }
 
 html {
