@@ -295,8 +295,11 @@ if (mobile.matches && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
   });
 }
 
-// Personal carousel: prev/next buttons step one slide, the counter follows the
-// scroll position (so swiping works too), and videos play only while visible.
+// Personal carousel. Prev/next and the arrow keys step one slide (fast clicks
+// stack), swiping works too, and the counter follows the scroll position.
+// Videos show a still frame and only one plays at a time: the one under the
+// mouse, otherwise the first video fully in view, and only while the carousel
+// is on screen. With reduced motion, videos play only on hover.
 document.querySelectorAll('[data-carousel]').forEach((carousel) => {
   const track = carousel.querySelector('.carousel-track');
   const slides = [...track.children];
@@ -304,46 +307,104 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
   const next = carousel.querySelector('[data-next]');
   const current = carousel.querySelector('[data-current]');
   const pad = (n) => String(n).padStart(2, '0');
+  const videoSlides = slides.filter((slide) => slide.querySelector('video'));
+  const autoplay = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   carousel.querySelector('[data-total]').textContent = pad(slides.length);
 
-  const slideStep = () => {
-    if (slides.length < 2) return track.clientWidth;
-    return slides[1].offsetLeft - slides[0].offsetLeft;
+  let index = 0;
+  let target = null; // where a button/key scroll is heading, so fast clicks stack
+  let onScreen = false;
+  let hovered = null;
+  let playingSlide = null;
+  let frame = null;
+
+  const slideStep = () => (slides.length < 2 ? track.clientWidth : slides[1].offsetLeft - slides[0].offsetLeft);
+  const maxScroll = () => track.scrollWidth - track.clientWidth;
+  const maxIndex = () => Math.max(0, Math.ceil(maxScroll() / slideStep() - 0.01));
+
+  const fullyVisible = (slide) => {
+    const left = slide.offsetLeft - track.offsetLeft - track.scrollLeft;
+    return left >= -2 && left + slide.offsetWidth <= track.clientWidth + 2;
+  };
+
+  const syncVideos = () => {
+    let playing = hovered;
+    if (!playing && autoplay && onScreen) playing = videoSlides.find(fullyVisible) ?? null;
+    // A video that takes over starts from the beginning; one that keeps
+    // playing (say, hovered and then left while still the automatic pick)
+    // carries on where it is.
+    const takingOver = playing !== playingSlide;
+    playingSlide = playing;
+    videoSlides.forEach((slide) => {
+      const video = slide.querySelector('video');
+      if (slide === playing) {
+        if (takingOver) video.currentTime = 0;
+        video.play().catch(() => {});
+      } else if (!video.paused) video.pause();
+    });
   };
 
   const update = () => {
-    const maxScroll = track.scrollWidth - track.clientWidth;
-    const index = track.scrollLeft >= maxScroll - 2
-      ? slides.length - 1
-      : Math.round(track.scrollLeft / slideStep());
-    current.textContent = pad(index + 1);
+    frame = null;
+    const step = slideStep();
+    if (target !== null && Math.abs(track.scrollLeft - Math.min(maxScroll(), target * step)) < 2) target = null;
+    index = track.scrollLeft >= maxScroll() - 2 ? maxIndex() : Math.round(track.scrollLeft / step);
+    // the counter shows the last slide once the end is reached
+    current.textContent = pad(track.scrollLeft >= maxScroll() - 2 ? slides.length : index + 1);
     prev.disabled = track.scrollLeft <= 2;
-    next.disabled = track.scrollLeft >= maxScroll - 2;
+    next.disabled = track.scrollLeft >= maxScroll() - 2;
+    syncVideos();
+  };
+  const scheduleUpdate = () => {
+    if (!frame) frame = requestAnimationFrame(update);
   };
 
-  prev.addEventListener('click', () => track.scrollBy({ left: -slideStep() }));
-  next.addEventListener('click', () => track.scrollBy({ left: slideStep() }));
-  track.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') prev.click();
-    if (event.key === 'ArrowRight') next.click();
-  });
-  track.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
-  update();
+  const goTo = (i) => {
+    target = Math.min(maxIndex(), Math.max(0, i));
+    track.scrollTo({ left: target * slideStep() });
+  };
+  const step = (dir) => goTo((target ?? index) + dir);
 
-  const videos = track.querySelectorAll('video');
-  if (videos.length) {
-    const videoObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(({ target, isIntersecting }) => {
-          if (isIntersecting) target.play().catch(() => {});
-          else target.pause();
-        });
-      },
-      { threshold: 0.5 },
-    );
-    videos.forEach((video) => videoObserver.observe(video));
-  }
+  prev.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
+  track.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    step(event.key === 'ArrowLeft' ? -1 : 1);
+  });
+  // a swipe or wheel scroll takes over from any button scroll in progress
+  ['pointerdown', 'wheel', 'touchstart'].forEach((type) =>
+    track.addEventListener(type, () => (target = null), { passive: true }),
+  );
+  track.addEventListener('scroll', scheduleUpdate, { passive: true });
+  window.addEventListener('resize', scheduleUpdate);
+
+  videoSlides.forEach((slide) => {
+    const video = slide.querySelector('video');
+    video.addEventListener('play', () => slide.classList.add('is-playing'));
+    video.addEventListener('pause', () => slide.classList.remove('is-playing'));
+    // hover (real pointers only) plays that video instead of the automatic one
+    slide.addEventListener('pointerenter', (event) => {
+      if (event.pointerType !== 'mouse') return;
+      hovered = slide;
+      syncVideos();
+    });
+    slide.addEventListener('pointerleave', (event) => {
+      if (event.pointerType !== 'mouse' || hovered !== slide) return;
+      hovered = null;
+      syncVideos();
+    });
+  });
+
+  new IntersectionObserver(
+    ([entry]) => {
+      onScreen = entry.isIntersecting;
+      syncVideos();
+    },
+    { threshold: 0.4 },
+  ).observe(track);
+
+  update();
 });
 
 const navToggle = document.querySelector('.nav-toggle');
