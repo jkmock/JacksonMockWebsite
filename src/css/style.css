@@ -801,24 +801,19 @@ body.nav-on-light .home-quiet .h-top::after {
 /* video badge: a play icon on the still frame, fading out while it plays */
 .slide-play {
   position: absolute;
-  top: 0.9rem;
-  right: 0.9rem;
+  inset: 0;
   display: grid;
   place-items: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  border: 2px solid var(--accent);
-  background: color-mix(in srgb, var(--bg-dark) 55%, transparent);
-  color: var(--accent);
+  color: #fff;
   pointer-events: none;
   transition: opacity 0.35s ease;
 }
 
 .slide-play svg {
-  width: 1rem;
-  height: 1rem;
-  margin-left: 0.15rem;
+  width: 5.5rem;
+  height: 5.5rem;
   fill: currentColor;
+  filter: drop-shadow(0 2px 8px rgb(0 0 0 / 0.45));
 }
 
 .slide.is-playing .slide-play {
@@ -897,11 +892,16 @@ body.nav-on-light .home-quiet .h-top::after {
   }
 }
 
-/* phones: one full-width slide at a time */
+/* phones: one full-width slide at a time; the video in view always plays,
+   so no play badge */
 @media (max-width: 860px) {
   .carousel {
     --gap: 0.9rem;
     --slide-w: 100%;
+  }
+
+  .slide-play {
+    display: none;
   }
 }
 
